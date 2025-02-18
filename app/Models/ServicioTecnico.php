@@ -9,7 +9,8 @@ class ServicioTecnico extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'descripcion']; // Ajusta según tu estructura
+    protected $table = 'servicios_tecnicos'; // 🔹 Especificamos el nombre correcto de la tabla
 
     public function solicitudes()
     {

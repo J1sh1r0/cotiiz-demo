@@ -12,7 +12,7 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        return response()->json(Proveedor::all(), 200);
+        return response()->json(Proveedor::all(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

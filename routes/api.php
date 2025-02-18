@@ -10,3 +10,4 @@ Route::apiResource('proveedores', ProveedorController::class);
 Route::apiResource('empresas', EmpresaController::class);
 Route::apiResource('servicios', ServicioTecnicoController::class);
 Route::apiResource('solicitudes', SolicitudController::class);
+

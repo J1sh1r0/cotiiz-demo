@@ -12,7 +12,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return response()->json(Empresa::all(), 200);
+        return response()->json(Empresa::all(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

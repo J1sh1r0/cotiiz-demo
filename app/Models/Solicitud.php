@@ -9,6 +9,7 @@ class Solicitud extends Model
 {
     use HasFactory;
 
+    protected $table = 'solicitudes'; // Asegurar que coincide con la base de datos
     protected $fillable = ['proveedor_id', 'empresa_id', 'servicio_id', 'estado'];
 
     public function proveedor()
