@@ -13,16 +13,14 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('proveedor_id')->constrained()->onDelete('cascade');
-            $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
+            $table->foreignId('empresa_id')->constrained('empresas')->onDelete('cascade');
             $table->foreignId('servicio_id')->constrained('servicios_tecnicos')->onDelete('cascade');
             $table->string('estado')->default('pendiente');
             $table->timestamps();
         });
     }
-
-
-
+    
     /**
      * Reverse the migrations.
      */
