@@ -29,15 +29,15 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all()); // Muestra los datos recibidos y detiene la ejecución
+        //dd($request->all()); // Muestra los datos recibidos y detiene la ejecución
 
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'correo' => 'required|email|unique:empresas,correo',
             'telefono' => 'nullable|string|max:15',
         ]);
-
-        Empresa::create($validated);
+        
+        //Empresa::create($validated);
 
         return redirect()->route('empresas.index')->with('success', 'Empresa creada correctamente');
     }
