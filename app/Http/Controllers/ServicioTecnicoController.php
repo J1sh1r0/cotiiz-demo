@@ -8,92 +8,75 @@ use App\Models\ServicioTecnico;
 class ServicioTecnicoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de servicios técnicos.
      */
     public function index()
     {
-        return response()->json(ServicioTecnico::all(), 200, [], JSON_UNESCAPED_UNICODE);
+        $servicios = ServicioTecnico::all();
+        return view('servicios.index', compact('servicios'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un servicio técnico.
      */
     public function create()
     {
-        //
+        return view('servicios.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda un nuevo servicio técnico en la base de datos.
      */
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'descripcion' => 'required|string|max:1000',
         ]);
 
-        $servicio = ServicioTecnico::create($request->all());
+        ServicioTecnico::create($request->all());
 
-        return response()->json($servicio, 201);
+        return redirect()->route('servicios.index')->with('success', 'Servicio técnico creado exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra un servicio técnico específico (opcional, si necesitas detalles individuales).
      */
-    public function show($id)
+    public function show(ServicioTecnico $servicio)
     {
-        $servicio = ServicioTecnico::find($id);
-
-        if (!$servicio) {
-            return response()->json(['message' => 'Servicio técnico no encontrado'], 404);
-        }
-
-        return response()->json($servicio, 200);
+        return view('servicios.show', compact('servicio'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un servicio técnico.
      */
-    public function edit(string $id)
+    public function edit(ServicioTecnico $servicio)
     {
-        //
+        return view('servicios.edit', compact('servicio'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información de un servicio técnico.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ServicioTecnico $servicio)
     {
-        $servicio = ServicioTecnico::find($id);
-
-        if (!$servicio) {
-            return response()->json(['message' => 'Servicio técnico no encontrado'], 404);
-        }
-
         $request->validate([
-            'nombre' => 'sometimes|required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1000',
         ]);
 
         $servicio->update($request->all());
 
-        return response()->json($servicio, 200);
+        return redirect()->route('servicios.index')->with('success', 'Servicio técnico actualizado correctamente.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un servicio técnico de la base de datos.
      */
-    public function destroy($id)
+    public function destroy(ServicioTecnico $servicio)
     {
-        $servicio = ServicioTecnico::find($id);
-
-        if (!$servicio) {
-            return response()->json(['message' => 'Servicio técnico no encontrado'], 404);
-        }
-
         $servicio->delete();
 
-        return response()->json(['message' => 'Servicio técnico eliminado correctamente'], 200);
+        return redirect()->route('servicios.index')->with('success', 'Servicio técnico eliminado correctamente.');
     }
 }

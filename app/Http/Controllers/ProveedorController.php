@@ -8,94 +8,77 @@ use App\Models\Proveedor;
 class ProveedorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de proveedores.
      */
     public function index()
     {
-        return response()->json(Proveedor::all(), 200, [], JSON_UNESCAPED_UNICODE);
+        $proveedores = Proveedor::all();
+        return view('proveedores.index', compact('proveedores'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un proveedor.
      */
     public function create()
     {
-        //
+        return view('proveedores.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda un nuevo proveedor en la base de datos.
      */
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'correo' => 'required|email|unique:proveedores,correo',
+            'correo' => 'required|email|unique:proveedores',
             'telefono' => 'nullable|string|max:20',
         ]);
 
-        $proveedor = Proveedor::create($request->all());
+        Proveedor::create($request->all());
 
-        return response()->json($proveedor, 201);
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor creado exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra un proveedor específico (opcional, si quieres agregar detalle).
      */
-    public function show($id)
+    public function show(Proveedor $proveedor)
     {
-        $proveedor = Proveedor::find($id);
-
-        if (!$proveedor) {
-            return response()->json(['message' => 'Proveedor no encontrado'], 404);
-        }
-
-        return response()->json($proveedor, 200);
+        return view('proveedores.show', compact('proveedor'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un proveedor (opcional).
      */
-    public function edit(string $id)
+    public function edit(Proveedor $proveedor)
     {
-        //
+        return view('proveedores.edit', compact('proveedor'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información de un proveedor.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Proveedor $proveedor)
     {
-        $proveedor = Proveedor::find($id);
-
-        if (!$proveedor) {
-            return response()->json(['message' => 'Proveedor no encontrado'], 404);
-        }
-
         $request->validate([
-            'nombre' => 'sometimes|required|string|max:255',
-            'correo' => 'sometimes|required|email|unique:proveedores,correo,' . $id,
+            'nombre' => 'required|string|max:255',
+            'correo' => 'required|email|unique:proveedores,correo,' . $proveedor->id,
             'telefono' => 'nullable|string|max:20',
         ]);
 
         $proveedor->update($request->all());
 
-        return response()->json($proveedor, 200);
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor actualizado correctamente.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un proveedor de la base de datos.
      */
-    public function destroy($id)
+    public function destroy(Proveedor $proveedor)
     {
-        $proveedor = Proveedor::find($id);
-
-        if (!$proveedor) {
-            return response()->json(['message' => 'Proveedor no encontrado'], 404);
-        }
-
         $proveedor->delete();
 
-        return response()->json(['message' => 'Proveedor eliminado correctamente'], 200);
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

@@ -12,7 +12,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return response()->json(Empresa::all(), 200, [], JSON_UNESCAPED_UNICODE);
+        $empresas = Empresa::all();
+        return view('empresas.index', compact('empresas'));
     }
 
     /**
@@ -20,7 +21,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('empresas.create');
     }
 
     /**
@@ -28,15 +29,17 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        dd($request->all()); // Muestra los datos recibidos y detiene la ejecución
+
+        $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'correo' => 'required|email|unique:empresas,correo',
-            'telefono' => 'nullable|string|max:20',
+            'telefono' => 'nullable|string|max:15',
         ]);
 
-        $empresa = Empresa::create($request->all());
+        Empresa::create($validated);
 
-        return response()->json($empresa, 201);
+        return redirect()->route('empresas.index')->with('success', 'Empresa creada correctamente');
     }
 
     /**

@@ -4,27 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Solicitud;
+use App\Models\Proveedor;
+use App\Models\Empresa;
+use App\Models\ServicioTecnico;
 
 class SolicitudController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de solicitudes.
      */
     public function index()
     {
-        return response()->json(Solicitud::all(), 200, [], JSON_UNESCAPED_UNICODE);
+        $solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->get();
+        return view('solicitudes.index', compact('solicitudes'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear una solicitud.
      */
     public function create()
     {
-        //
+        $proveedores = Proveedor::all();
+        $empresas = Empresa::all();
+        $servicios = ServicioTecnico::all();
+        return view('solicitudes.create', compact('proveedores', 'empresas', 'servicios'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda una nueva solicitud en la base de datos.
      */
     public function store(Request $request)
     {
@@ -32,72 +39,57 @@ class SolicitudController extends Controller
             'proveedor_id' => 'required|exists:proveedores,id',
             'empresa_id' => 'required|exists:empresas,id',
             'servicio_id' => 'required|exists:servicios_tecnicos,id',
-            'estado' => 'nullable|string|in:pendiente,aprobado,rechazado'
+            'estado' => 'required|string|max:50',
         ]);
 
-        $solicitud = Solicitud::create($request->all());
+        Solicitud::create($request->all());
 
-        return response()->json($solicitud, 201);
+        return redirect()->route('solicitudes.index')->with('success', 'Solicitud creada exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra una solicitud específica (opcional, si necesitas detalles individuales).
      */
-    public function show($id)
+    public function show(Solicitud $solicitud)
     {
-        $solicitud = Solicitud::find($id);
-
-        if (!$solicitud) {
-            return response()->json(['message' => 'Solicitud no encontrada'], 404);
-        }
-
-        return response()->json($solicitud, 200);
+        return view('solicitudes.show', compact('solicitud'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar una solicitud.
      */
-    public function edit(string $id)
+    public function edit(Solicitud $solicitud)
     {
-        //
+        $proveedores = Proveedor::all();
+        $empresas = Empresa::all();
+        $servicios = ServicioTecnico::all();
+        return view('solicitudes.edit', compact('solicitud', 'proveedores', 'empresas', 'servicios'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información de una solicitud.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Solicitud $solicitud)
     {
-        $solicitud = Solicitud::find($id);
-
-        if (!$solicitud) {
-            return response()->json(['message' => 'Solicitud no encontrada'], 404);
-        }
-
         $request->validate([
-            'proveedor_id' => 'sometimes|exists:proveedores,id',
-            'empresa_id' => 'sometimes|exists:empresas,id',
-            'servicio_id' => 'sometimes|exists:servicios_tecnicos,id',
-            'estado' => 'nullable|string|in:pendiente,aprobado,rechazado'
+            'proveedor_id' => 'required|exists:proveedores,id',
+            'empresa_id' => 'required|exists:empresas,id',
+            'servicio_id' => 'required|exists:servicios_tecnicos,id',
+            'estado' => 'required|string|max:50',
         ]);
 
         $solicitud->update($request->all());
 
-        return response()->json($solicitud, 200);
+        return redirect()->route('solicitudes.index')->with('success', 'Solicitud actualizada correctamente.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina una solicitud de la base de datos.
      */
-    public function destroy(string $id)
+    public function destroy(Solicitud $solicitud)
     {
-        $solicitud = Solicitud::find($id);
-
-        if (!$solicitud) {
-            return response()->json(['message' => 'Solicitud no encontrada'], 404);
-        }
-
         $solicitud->delete();
 
-        return response()->json(['message' => 'Solicitud eliminada correctamente'], 200);
+        return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada correctamente.');
     }
 }
