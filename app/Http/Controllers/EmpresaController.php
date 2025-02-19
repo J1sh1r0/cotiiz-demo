@@ -37,7 +37,7 @@ class EmpresaController extends Controller
             'telefono' => 'nullable|string|max:15',
         ]);
         
-        //Empresa::create($validated);
+        Empresa::create($validated);
 
         return redirect()->route('empresas.index')->with('success', 'Empresa creada correctamente');
     }

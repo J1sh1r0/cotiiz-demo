@@ -9,12 +9,8 @@ class Empresa extends Model
 {
     use HasFactory;
 
-    //protected $table = 'empresas'; // Asegurar que coincide con la base de datos
-    protected $fillable = [
-        'nombre',
-        'correo',
-        'telefono',
-    ];
+    protected $table = 'empresas'; // Asegurar que coincide con la base de datos
+    protected $fillable = ['nombre', 'correo', 'telefono'];
 
     // public function solicitudes()
     // {
