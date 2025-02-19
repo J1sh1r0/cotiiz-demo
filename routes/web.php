@@ -4,11 +4,14 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ServicioTecnicoController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Rutas para Empresas
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
