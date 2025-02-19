@@ -36,7 +36,7 @@ class EmpresaController extends Controller
             'correo' => 'required|email|unique:empresas,correo',
             'telefono' => 'nullable|string|max:15',
         ]);
-        
+
         Empresa::create($validated);
 
         return redirect()->route('empresas.index')->with('success', 'Empresa creada correctamente');

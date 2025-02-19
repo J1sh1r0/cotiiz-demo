@@ -1,44 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Proveedores')
-
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Lista de Proveedores</h1>
-    
-    <a href="{{ route('proveedores.create') }}" class="btn btn-primary mb-3">Nuevo Proveedor</a>
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Proveedores</h1>
+        <a href="{{ route('proveedores.create') }}" class="bg-green-500 text-white px-4 py-2 rounded">Crear Proveedor</a>
+    </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($proveedores as $proveedor)
-            <tr>
-                <td>{{ $proveedor->id }}</td>
-                <td>{{ $proveedor->nombre }}</td>
-                <td>{{ $proveedor->correo }}</td>
-                <td>{{ $proveedor->telefono }}</td>
-                <td>
-                    <form action="{{ route('proveedores.destroy', $proveedor->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este proveedor?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full border-collapse">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">Nombre</th>
+                    <th class="p-3 text-left">Correo</th>
+                    <th class="p-3 text-left">Teléfono</th>
+                    <th class="p-3 text-left">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($proveedores as $proveedor)
+                <tr class="border-b">
+                    <td class="p-3">{{ $proveedor->id }}</td>
+                    <td class="p-3">{{ $proveedor->nombre }}</td>
+                    <td class="p-3">{{ $proveedor->correo }}</td>
+                    <td class="p-3">{{ $proveedor->telefono }}</td>
+                    <td class="p-3">
+                        <a href="{{ route('proveedores.edit', $proveedor->id) }}" class="text-blue-500">Editar</a>
+                        <form action="{{ route('proveedores.destroy', $proveedor->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 ml-2">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

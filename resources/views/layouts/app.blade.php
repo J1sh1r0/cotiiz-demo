@@ -11,7 +11,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-gray-900 text-white flex flex-col p-5">
             <div class="flex items-center justify-center mb-6">
-                <img src="{{ asset('images/CotizNFondo.png') }}" alt="Cotiiz Logo" class="h-12 w-auto mx-auto">
+                <img src="{{ asset('images/CotizNFondo.png') }}" alt="Cotiiz Logo">
             </div>
             <nav class="flex-1">
                 <ul class="space-y-2">
