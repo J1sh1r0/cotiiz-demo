@@ -39,13 +39,15 @@ class SolicitudController extends Controller
             'proveedor_id' => 'required|exists:proveedores,id',
             'empresa_id' => 'required|exists:empresas,id',
             'servicio_id' => 'required|exists:servicios_tecnicos,id',
-            'estado' => 'required|string|max:50',
+            'descripcion' => 'required|string|max:255',
+            'estado' => 'required|in:pendiente,aprobado,rechazado'
         ]);
 
         Solicitud::create($request->all());
 
-        return redirect()->route('solicitudes.index')->with('success', 'Solicitud creada exitosamente.');
+        return redirect()->route('solicitudes.index')->with('success', 'Solicitud creada correctamente.');
     }
+
 
     /**
      * Muestra una solicitud específica (opcional, si necesitas detalles individuales).
@@ -89,7 +91,6 @@ class SolicitudController extends Controller
     public function destroy(Solicitud $solicitud)
     {
         $solicitud->delete();
-
         return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada correctamente.');
     }
 }

@@ -78,7 +78,6 @@ class ProveedorController extends Controller
     public function destroy(Proveedor $proveedor)
     {
         $proveedor->delete();
-
         return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

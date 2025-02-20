@@ -34,7 +34,7 @@ class EmpresaController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'correo' => 'required|email|unique:empresas,correo',
-            'telefono' => 'nullable|string|max:15',
+            'telefono' => 'nullable|string|max:20',
         ]);
 
         Empresa::create($validated);
@@ -89,16 +89,9 @@ class EmpresaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Empresa $empresa)
     {
-        $empresa = Empresa::find($id);
-
-        if (!$empresa) {
-            return response()->json(['message' => 'Empresa no encontrada'], 404);
-        }
-
         $empresa->delete();
-
-        return response()->json(['message' => 'Empresa eliminada correctamente'], 200);
+        return redirect()->route('empresas.index')->with('success', 'Empresa eliminada correctamente.');
     }
 }
