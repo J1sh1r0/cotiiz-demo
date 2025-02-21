@@ -90,7 +90,9 @@ class SolicitudController extends Controller
      */
     public function destroy(Solicitud $solicitud)
     {
-        $solicitud->delete();
+        //dd($solicitud->id); // Esto mostrará el ID que Laravel está recibiendo
+
+        $solicitud->forceDelete();
         return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada correctamente.');
     }
 }

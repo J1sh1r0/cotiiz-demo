@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Solicitud extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
     use HasFactory;
 
     protected $table = 'solicitudes'; // Asegurar que coincide con la base de datos

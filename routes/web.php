@@ -32,3 +32,5 @@ Route::post('/servicios', [ServicioTecnicoController::class, 'store'])->name('se
 Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
 Route::get('/solicitudes/create', [SolicitudController::class, 'create'])->name('solicitudes.create');
 Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
+Route::delete('/solicitudes/{solicitud}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
+

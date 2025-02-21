@@ -51,10 +51,11 @@
                     </td>
                     <td class="py-2 px-4 border-b text-center">
                         <a href="{{ route('solicitudes.edit', $solicitud->id) }}" class="text-blue-500 hover:underline">Editar</a>
-                        <form action="{{ route('solicitudes.destroy', $solicitud->id) }}" method="POST" class="inline delete-form">
+                        <form action="{{ route('solicitudes.destroy', $solicitud->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:underline ml-2">Eliminar</button>
+                            <button type="submit" class="text-red-500">Eliminar</button>
+                            {{-- <button type="submit" class="text-red-500 hover:underline ml-2">Eliminar</button> --}}
                         </form>
                     </td>
                 </tr>
