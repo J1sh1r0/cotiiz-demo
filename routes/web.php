@@ -15,22 +15,24 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Rutas para Empresas
 Route::resource('empresas', EmpresaController::class);
-Route::get('/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
-Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
+//Route::get('/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
+//Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
 
 // Rutas para Proveedores
 Route::resource('proveedores', ProveedorController::class);
-Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
-Route::post('/proveedores', [ProveedorController::class, 'store'])->name('proveedores.store');
+//Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
+//Route::post('/proveedores', [ProveedorController::class, 'store'])->name('proveedores.store');
 
 // Rutas para Servicios Técnicos
-Route::resource('solicitudes', SolicitudController::class);
 Route::get('/servicios/create', [ServicioTecnicoController::class, 'create'])->name('servicios.create');
-Route::post('/servicios', [ServicioTecnicoController::class, 'store'])->name('servicios.store');
+//Route::post('/servicios', [ServicioTecnicoController::class, 'store'])->name('servicios.store');
 
 // Rutas para Solicitudes
-Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
-Route::get('/solicitudes/create', [SolicitudController::class, 'create'])->name('solicitudes.create');
-Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
-Route::delete('/solicitudes/{solicitud}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
+Route::resource('solicitudes', SolicitudController::class);
+//Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
+//Route::get('/solicitudes/create', [SolicitudController::class, 'create'])->name('solicitudes.create');
+//Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
+//Route::delete('/solicitudes/{solicitud}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
+Route::put('/solicitudes/{solicitud}', [SolicitudController::class, 'update'])->name('solicitudes.update');
+
 

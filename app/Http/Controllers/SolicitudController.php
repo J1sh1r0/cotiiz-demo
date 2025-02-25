@@ -15,9 +15,11 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->get();
+        //$solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->get();
+        $solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->whereNull('deleted_at')->get();
         return view('solicitudes.index', compact('solicitudes'));
     }
+
 
     /**
      * Muestra el formulario para crear una solicitud.
@@ -68,6 +70,8 @@ class SolicitudController extends Controller
         return view('solicitudes.edit', compact('solicitud', 'proveedores', 'empresas', 'servicios'));
     }
 
+
+
     /**
      * Actualiza la información de una solicitud.
      */
@@ -85,6 +89,8 @@ class SolicitudController extends Controller
         return redirect()->route('solicitudes.index')->with('success', 'Solicitud actualizada correctamente.');
     }
 
+
+
     /**
      * Elimina una solicitud de la base de datos.
      */
@@ -92,7 +98,16 @@ class SolicitudController extends Controller
     {
         //dd($solicitud->id); // Esto mostrará el ID que Laravel está recibiendo
 
-        $solicitud->forceDelete();
+        $solicitud->delete(); // Usa eliminación lógica con SoftDeletes
         return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada correctamente.');
+    }
+
+    /**
+     * Elimina una solicitud de la base de datos permanentemente.
+     */
+    public function destroyPermanent(Solicitud $solicitud)
+    {
+        $solicitud->forceDelete(); // Borra de la base de datos permanentemente
+        return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada permanentemente.');
     }
 }

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Solicitud extends Model
 {
-    //use SoftDeletes;
+    use SoftDeletes;
     use HasFactory;
 
-    protected $table = 'solicitudes'; // Asegurar que coincide con la base de datos
+    protected $table = 'solicitudes';
     protected $fillable = ['proveedor_id', 'empresa_id', 'servicio_id', 'descripcion', 'estado'];
 
 
