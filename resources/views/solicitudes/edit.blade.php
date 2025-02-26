@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('solicitud.update', $solicitud->id) }}" method="POST">
+        <form action="{{ isset($solicitud) ? route('solicitudes.update', $solicitud->id) : '#' }}" method="POST">
             @csrf
             @method('PUT')
 

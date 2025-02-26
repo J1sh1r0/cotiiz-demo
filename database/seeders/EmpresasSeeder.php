@@ -2,16 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
+use App\Models\Empresa;
 
 class EmpresasSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('empresas')->insert([
-            ['nombre' => 'Empresa A', 'correo' => 'empresaA@example.com', 'telefono' => '555555555'],
-            ['nombre' => 'Empresa B', 'correo' => 'empresaB@example.com', 'telefono' => '666666666'],
-        ]);
+        Empresa::factory()->count(10)->create(); // Genera 10 empresas
     }
 }

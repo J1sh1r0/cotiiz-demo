@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('correo')->nullable(); // Permite valores nulos
+            $table->string('nombre')->default('Empresa Genérica'); // Agrega un valor por defecto
+            $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }
+
 
 
     /**

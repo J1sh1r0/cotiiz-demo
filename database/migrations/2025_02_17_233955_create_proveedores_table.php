@@ -12,10 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('proveedores', function (Blueprint $table) {
-            $table->id(); // Esto crea un BIGINT UNSIGNED AUTO_INCREMENT
+            $table->id();
             $table->string('nombre');
-            $table->string('correo')->unique();
-            $table->string('telefono')->nullable();
+            $table->string('email')->unique();
+            $table->string('telefono');
             $table->timestamps();
         });
     }

@@ -14,22 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Desactivar la comprobación de claves foráneas
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        // Truncar tablas
-        DB::table('proveedores')->truncate();
-        DB::table('empresas')->truncate();
-        DB::table('solicitudes')->truncate();
-        DB::table('servicios_tecnicos')->truncate();
-
-        // Reactivar la comprobación de claves foráneas
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        // Llamar a los seeders
         $this->call([
-            ProveedoresSeeder::class,
             EmpresasSeeder::class,
+            ProveedoresSeeder::class,
             ServiciosTecnicosSeeder::class,
             SolicitudesSeeder::class,
         ]);

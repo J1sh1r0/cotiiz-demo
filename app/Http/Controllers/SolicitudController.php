@@ -64,30 +64,24 @@ class SolicitudController extends Controller
      */
     public function edit(Solicitud $solicitud)
     {
+        //dd($solicitud); // Agrega esta línea temporalmente para depurar
+
         $proveedores = Proveedor::all();
         $empresas = Empresa::all();
         $servicios = ServicioTecnico::all();
+
         return view('solicitudes.edit', compact('solicitud', 'proveedores', 'empresas', 'servicios'));
     }
-
-
 
     /**
      * Actualiza la información de una solicitud.
      */
     public function update(Request $request, Solicitud $solicitud)
     {
-        $request->validate([
-            'proveedor_id' => 'required|exists:proveedores,id',
-            'empresa_id' => 'required|exists:empresas,id',
-            'servicio_id' => 'required|exists:servicios_tecnicos,id',
-            'estado' => 'required|string|max:50',
-        ]);
-
         $solicitud->update($request->all());
-
-        return redirect()->route('solicitudes.index')->with('success', 'Solicitud actualizada correctamente.');
+        return redirect()->route('solicitudes.index');
     }
+
 
 
 
