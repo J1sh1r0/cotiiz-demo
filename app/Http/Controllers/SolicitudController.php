@@ -15,11 +15,16 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        //$solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->get();
-        $solicitudes = Solicitud::with(['proveedor', 'empresa', 'servicio'])->whereNull('deleted_at')->get();
-        return view('solicitudes.index', compact('solicitudes'));
-    }
+        $perfil = session('perfil');
 
+        if ($perfil === 'comprador') {
+            return view('comprador.solicitudes', ['solicitudes' => Solicitud::all()]);
+        } elseif ($perfil === 'proveedor') {
+            return view('proveedor.solicitudes', ['solicitudes' => Solicitud::all()]);
+        }
+
+        return redirect()->route('seleccion.perfil');
+    }
 
     /**
      * Muestra el formulario para crear una solicitud.

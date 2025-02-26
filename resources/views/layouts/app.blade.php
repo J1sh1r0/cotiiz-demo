@@ -14,20 +14,56 @@
             <div class="text-center mb-5">
                 <img src="{{ asset('images/CotiizNFondo.png') }}" alt="Cotiiz Logo" class="w-32 mx-auto">
             </div>
+            
+            <!-- Mostrar perfil actual -->
+            <div class="text-center text-sm bg-gray-800 p-3 rounded mb-4">
+                <p class="text-gray-400">Perfil seleccionado:</p>
+                <p class="font-bold text-white">
+                    {{ ucfirst(session('perfil', 'No seleccionado')) }}
+                </p>
+                <a href="{{ route('seleccion.perfil') }}" class="block text-blue-300 text-sm hover:underline mt-2">
+                    Cambiar perfil
+                </a>
+            </div>
+
             <nav>
                 <ul class="space-y-2">
                     <li>
                         <a href="{{ route('dashboard') }}" class="block py-2 px-4 rounded bg-blue-500 text-white">🏠 Dashboard</a>
                     </li>
-                    <li>
-                        <a href="{{ route('empresas.index') }}" class="block py-2 px-4 rounded hover:bg-gray-700">🏢 Empresas</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('proveedores.index') }}" class="block py-2 px-4 rounded hover:bg-gray-700">📦 Proveedores</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('solicitudes.index') }}" class="block py-2 px-4 rounded hover:bg-gray-700">📝 Solicitudes</a>
-                    </li>
+
+                    @if(session('perfil') === 'comprador')
+                        <li>
+                            <a href="{{ route('comprador.solicitudes') }}" class="block py-2 px-4 rounded hover:bg-gray-700">📝 Crear Solicitud</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('comprador.usuarios') }}" class="block py-2 px-4 rounded hover:bg-gray-700">👥 Ver Usuarios</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('comprador.subcuentas') }}" class="block py-2 px-4 rounded hover:bg-gray-700">🔑 Subcuentas</a>
+                        </li>
+                    @endif
+
+                    @if(session('perfil') === 'proveedor')
+                        <li>
+                            <a href="{{ route('proveedor.solicitudes') }}" class="block py-2 px-4 rounded hover:bg-gray-700">📋 Solicitudes Recibidas</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('proveedor.catalogo_productos') }}" class="block py-2 px-4 rounded hover:bg-gray-700">🛒 Productos</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('proveedor.catalogo_servicios') }}" class="block py-2 px-4 rounded hover:bg-gray-700">⚙️ Servicios</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('proveedor.catalogo_profesionales') }}" class="block py-2 px-4 rounded hover:bg-gray-700">🎓 Profesionales</a>
+                        </li>
+                    @endif
+
+                    @if(session('perfil') === 'profesional')
+                        <li>
+                            <a href="{{ route('profesional.servicios') }}" class="block py-2 px-4 rounded hover:bg-gray-700">⚙️ Servicios</a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </aside>

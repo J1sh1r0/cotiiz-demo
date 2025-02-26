@@ -7,35 +7,38 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
+// 🌟 Nueva pantalla de selección de perfil
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return view('seleccion_perfil');
+})->name('seleccion.perfil');
+
+// 📌 Rutas según el perfil seleccionado
+Route::middleware(['perfilSeleccionado'])->group(function () {
+
+    // 🔹 Vistas para Compradores/Empresas
+    Route::prefix('comprador')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('comprador.dashboard');
+        Route::resource('empresas', EmpresaController::class);
+        Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('comprador.solicitudes');
+    });
+
+    // 🔹 Vistas para Proveedores
+    Route::prefix('proveedor')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('proveedor.dashboard');
+        Route::resource('proveedores', ProveedorController::class);
+        Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('proveedor.solicitudes');
+    });
+
+    // 🔹 Vistas para Profesionales
+    Route::prefix('profesional')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('profesional.dashboard');
+        Route::get('/servicios', [ServicioTecnicoController::class, 'index'])->name('profesional.servicios');
+    });
+
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-// Rutas para Empresas
-Route::resource('empresas', EmpresaController::class);
-//Route::get('/empresas/create', [EmpresaController::class, 'create'])->name('empresas.create');
-//Route::post('/empresas', [EmpresaController::class, 'store'])->name('empresas.store');
-
-// Rutas para Proveedores
-Route::resource('proveedores', ProveedorController::class);
-//Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
-//Route::post('/proveedores', [ProveedorController::class, 'store'])->name('proveedores.store');
-
-// Rutas para Servicios Técnicos
-Route::get('/servicios/create', [ServicioTecnicoController::class, 'create'])->name('servicios.create');
-//Route::post('/servicios', [ServicioTecnicoController::class, 'store'])->name('servicios.store');
-
-// Rutas para Solicitudes
-Route::resource('solicitudes', SolicitudController::class);
-//Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
-//Route::get('/solicitudes/create', [SolicitudController::class, 'create'])->name('solicitudes.create');
-//Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('solicitudes.store');
-//Route::delete('/solicitudes/{solicitud}', [SolicitudController::class, 'destroy'])->name('solicitudes.destroy');
-//Route::put('/solicitudes/{solicitud}', [SolicitudController::class, 'update'])->name('solicitudes.update');
-//Route::put('/solicitudes/{solicitud}', [SolicitudController::class, 'update'])->name('solicitudes.update');
-
-
-
-
+// 🚀 Ruta para guardar la selección de perfil
+Route::post('/seleccionar-perfil', function (Illuminate\Http\Request $request) {
+    session(['perfil' => $request->perfil]);
+    return redirect()->route($request->perfil . '.dashboard');
+})->name('guardar.perfil');
