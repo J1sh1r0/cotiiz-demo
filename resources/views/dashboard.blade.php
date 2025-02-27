@@ -23,8 +23,8 @@
             <p class="text-gray-600 text-center">Responde a solicitudes y administra tu catálogo.</p>
         </a>
 
-        <!-- Tarjeta de Profesionales -->
-        <a href="{{ route('profesionales.servicios') }}" class="bg-white shadow-md rounded-lg p-6 flex flex-col items-center space-y-3 hover:bg-gray-100 transition">
+        <!-- Tarjeta de Profesional -->
+        <a href="{{ route('profesional.servicios') }}" class="bg-white shadow-md rounded-lg p-6 flex flex-col items-center space-y-3 hover:bg-gray-100 transition">
             <div class="text-green-500 text-4xl">👨‍🔧</div>
             <h3 class="text-lg font-semibold text-gray-800">Profesionales Especializados</h3>
             <p class="text-gray-600 text-center">Explora servicios técnicos y más.</p>
