@@ -33,8 +33,10 @@
                             </td>
                             <td class="border p-2">{{ $solicitud->created_at->format('d/m/Y') }}</td>
                             <td class="border p-2 text-center">
-                                <a href="#" class="text-blue-500 hover:underline">Ver</a>
-                            </td>
+                                <a href="{{ route('comprador.solicitudes.ver', $solicitud->id) }}" class="text-blue-500 hover:underline">
+                                    Ver
+                                </a>
+                            </td>                            
                         </tr>
                     @endforeach
                 </tbody>

@@ -59,9 +59,10 @@ class SolicitudController extends Controller
     /**
      * Muestra una solicitud específica (opcional, si necesitas detalles individuales).
      */
-    public function show(Solicitud $solicitud)
+    public function show($id)
     {
-        return view('solicitudes.show', compact('solicitud'));
+        $solicitud = Solicitud::findOrFail($id);
+        return view('comprador.solicitud_ver', compact('solicitud'));
     }
 
     /**

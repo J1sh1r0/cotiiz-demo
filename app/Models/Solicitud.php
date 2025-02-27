@@ -12,8 +12,7 @@ class Solicitud extends Model
     use HasFactory;
 
     protected $table = 'solicitudes';
-    protected $fillable = ['proveedor_id', 'empresa_id', 'servicio_id', 'descripcion', 'estado'];
-
+    protected $fillable = ['titulo', 'descripcion', 'estado', 'empresa_id', 'proveedor_id', 'servicio_id'];
 
     public function proveedor()
     {

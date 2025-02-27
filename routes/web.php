@@ -5,9 +5,11 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ServicioTecnicoController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\SubcuentaController;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 // 🌟 Pantalla de selección de perfil
 Route::get('/', function () {
@@ -44,18 +46,16 @@ Route::prefix('comprador')->group(function () {
         'update' => 'comprador.empresas.update',
         'destroy' => 'comprador.empresas.destroy',
     ]);
+    Route::get('/comprador/solicitudes/{id}', [SolicitudController::class, 'show'])
+        ->name('comprador.solicitudes.ver');
 
     Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('comprador.solicitudes');
 
     // 🚀 Ruta para usuarios
-    Route::get('/usuarios', function () {
-        return view('comprador.usuarios'); // Asegúrate de que esta vista existe
-    })->name('comprador.usuarios');
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('comprador.usuarios');
 
-    // 🔹 Ruta para subcuentas (corrección del error)
-    Route::get('/subcuentas', function () {
-        return view('comprador.subcuentas'); // Asegúrate de que esta vista existe
-    })->name('comprador.subcuentas');
+    // 🔹 Ruta para subcuentas
+    Route::get('/subcuentas', [SubcuentaController::class, 'index'])->name('comprador.subcuentas');
 });
 
 

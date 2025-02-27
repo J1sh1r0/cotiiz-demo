@@ -22,18 +22,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($usuarios as $usuario)
-                        <tr class="border-t">
-                            <td class="border p-2">{{ $loop->iteration }}</td>
-                            <td class="border p-2">{{ $usuario->nombre }}</td>
-                            <td class="border p-2">{{ $usuario->email }}</td>
-                            <td class="border p-2">{{ $usuario->telefono }}</td>
-                            <td class="border p-2">{{ ucfirst($usuario->tipo) }}</td>
-                            <td class="border p-2 text-center">
-                                <a href="#" class="text-blue-500 hover:underline">Ver</a>
+                    @if(isset($usuarios) && count($usuarios) > 0)
+                        @foreach ($usuarios as $usuario)
+                            <tr class="border-t">
+                                <td class="border p-2">{{ $loop->iteration }}</td>
+                                <td class="border p-2">{{ $usuario->nombre }}</td>
+                                <td class="border p-2">{{ $usuario->email }}</td>
+                                <td class="border p-2">{{ $usuario->telefono }}</td>
+                                <td class="border p-2">{{ ucfirst($usuario->tipo) }}</td>
+                                <td class="border p-2 text-center">
+                                    <a href="#" class="text-blue-500 hover:underline">Ver</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="6" class="border p-2 text-center text-gray-500">
+                                No hay usuarios registrados.
                             </td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
