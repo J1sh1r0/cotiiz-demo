@@ -46,10 +46,12 @@ Route::prefix('comprador')->group(function () {
         'update' => 'comprador.empresas.update',
         'destroy' => 'comprador.empresas.destroy',
     ]);
-    Route::get('/comprador/solicitudes/{id}', [SolicitudController::class, 'show'])
-        ->name('comprador.solicitudes.ver');
 
+    // 📌 Rutas para Solicitudes
     Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('comprador.solicitudes');
+    Route::get('/solicitudes/crear', [SolicitudController::class, 'create'])->name('comprador.solicitudes.crear');
+    Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('comprador.solicitudes.store');
+    Route::get('/solicitudes/{id}', [SolicitudController::class, 'show'])->name('comprador.solicitudes.ver');
 
     // 🚀 Ruta para usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('comprador.usuarios');
@@ -69,8 +71,6 @@ Route::prefix('profesional')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('profesional.dashboard');
     Route::get('/servicios', [ServicioTecnicoController::class, 'index'])->name('profesional.servicios');
 });
-
-
 
 // 📌 Ruta para seleccionar perfil
 Route::post('/seleccionar-perfil', function (Request $request) {

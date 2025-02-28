@@ -44,9 +44,9 @@
         </div>
 
         <div class="mt-4">
-            <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded inline-block hover:bg-blue-600">
+            <a href="{{ route('comprador.solicitudes.crear') }}" class="bg-blue-500 text-white px-4 py-2 rounded inline-block hover:bg-blue-600">
                 Crear Nueva Solicitud
             </a>
-        </div>
+        </div>        
     </div>
 @endsection

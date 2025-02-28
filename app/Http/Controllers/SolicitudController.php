@@ -11,16 +11,18 @@ use App\Models\ServicioTecnico;
 class SolicitudController extends Controller
 {
     /**
-     * Muestra la lista de solicitudes.
+     * Muestra la lista de solicitudes según el perfil.
      */
     public function index()
     {
         $perfil = session('perfil');
 
         if ($perfil === 'comprador') {
-            return view('comprador.solicitudes', ['solicitudes' => Solicitud::all()]);
+            $solicitudes = Solicitud::all(); // Puedes filtrar aquí según sea necesario
+            return view('comprador.solicitudes', compact('solicitudes'));
         } elseif ($perfil === 'proveedor') {
-            return view('proveedor.solicitudes', ['solicitudes' => Solicitud::all()]);
+            $solicitudes = Solicitud::all();
+            return view('proveedor.solicitudes', compact('solicitudes'));
         }
 
         return redirect()->route('seleccion.perfil');
@@ -34,7 +36,7 @@ class SolicitudController extends Controller
         $proveedores = Proveedor::all();
         $empresas = Empresa::all();
         $servicios = ServicioTecnico::all();
-        return view('solicitudes.create', compact('proveedores', 'empresas', 'servicios'));
+        return view('comprador.solicitud_crear', compact('proveedores', 'empresas', 'servicios'));
     }
 
     /**
@@ -43,25 +45,44 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:500',
             'proveedor_id' => 'required|exists:proveedores,id',
             'empresa_id' => 'required|exists:empresas,id',
             'servicio_id' => 'required|exists:servicios_tecnicos,id',
-            'descripcion' => 'required|string|max:255',
             'estado' => 'required|in:pendiente,aprobado,rechazado'
         ]);
 
-        Solicitud::create($request->all());
+        Solicitud::create([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'proveedor_id' => $request->proveedor_id,
+            'empresa_id' => $request->empresa_id,
+            'servicio_id' => $request->servicio_id,
+            'estado' => $request->estado,
+        ]);
 
-        return redirect()->route('solicitudes.index')->with('success', 'Solicitud creada correctamente.');
+        return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud creada correctamente.');
     }
 
-
     /**
-     * Muestra una solicitud específica (opcional, si necesitas detalles individuales).
+     * Muestra una solicitud específica.
      */
     public function show($id)
     {
         $solicitud = Solicitud::findOrFail($id);
+        $user = auth()->user();
+
+        if ($user && $user->empresa_id && $user->proveedor_id) {
+            if (session('perfil') === 'comprador' && $solicitud->empresa_id !== $user->empresa_id) {
+                return redirect()->route('comprador.solicitudes')->with('error', 'No tienes permiso para ver esta solicitud.');
+            }
+
+            if (session('perfil') === 'proveedor' && $solicitud->proveedor_id !== $user->proveedor_id) {
+                return redirect()->route('proveedor.solicitudes')->with('error', 'No tienes permiso para ver esta solicitud.');
+            }
+        }
+
         return view('comprador.solicitud_ver', compact('solicitud'));
     }
 
@@ -70,13 +91,11 @@ class SolicitudController extends Controller
      */
     public function edit(Solicitud $solicitud)
     {
-        //dd($solicitud); // Agrega esta línea temporalmente para depurar
-
         $proveedores = Proveedor::all();
         $empresas = Empresa::all();
         $servicios = ServicioTecnico::all();
 
-        return view('solicitudes.edit', compact('solicitud', 'proveedores', 'empresas', 'servicios'));
+        return view('comprador.solicitud_editar', compact('solicitud', 'proveedores', 'empresas', 'servicios'));
     }
 
     /**
@@ -84,22 +103,38 @@ class SolicitudController extends Controller
      */
     public function update(Request $request, Solicitud $solicitud)
     {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:500',
+            'estado' => 'required|in:pendiente,aprobado,rechazado'
+        ]);
+
         $solicitud->update($request->all());
-        return redirect()->route('solicitudes.index');
+
+        return redirect()->route('comprador.solicitudes')->with('success', 'Solicitud actualizada correctamente.');
     }
-
-
-
 
     /**
      * Elimina una solicitud de la base de datos.
      */
     public function destroy(Solicitud $solicitud)
     {
-        //dd($solicitud->id); // Esto mostrará el ID que Laravel está recibiendo
+        $user = auth()->user();
 
-        $solicitud->delete(); // Usa eliminación lógica con SoftDeletes
-        return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada correctamente.');
+        if (!$user) {
+            return redirect()->route(session('perfil') . '.solicitudes')->with('error', 'Debes estar autenticado para eliminar solicitudes.');
+        }
+
+        if (session('perfil') === 'comprador' && $solicitud->empresa_id !== $user->empresa_id) {
+            return redirect()->route('comprador.solicitudes')->with('error', 'No tienes permiso para eliminar esta solicitud.');
+        }
+
+        if (session('perfil') === 'proveedor' && $solicitud->proveedor_id !== $user->proveedor_id) {
+            return redirect()->route('proveedor.solicitudes')->with('error', 'No tienes permiso para eliminar esta solicitud.');
+        }
+
+        $solicitud->delete();
+        return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud eliminada correctamente.');
     }
 
     /**
@@ -107,7 +142,7 @@ class SolicitudController extends Controller
      */
     public function destroyPermanent(Solicitud $solicitud)
     {
-        $solicitud->forceDelete(); // Borra de la base de datos permanentemente
-        return redirect()->route('solicitudes.index')->with('success', 'Solicitud eliminada permanentemente.');
+        $solicitud->forceDelete();
+        return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud eliminada permanentemente.');
     }
 }

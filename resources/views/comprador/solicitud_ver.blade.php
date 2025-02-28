@@ -12,9 +12,7 @@
         </div>
 
         <div class="mt-4">
-            <a href="{{ route('comprador.solicitudes') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Volver a Solicitudes
-            </a>
+            <a href="{{ route('comprador.solicitudes') }}" class="text-blue-500 hover:underline">Volver a Solicitudes</a>
         </div>
     </div>
 @endsection
