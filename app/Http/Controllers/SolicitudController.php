@@ -17,6 +17,7 @@ class SolicitudController extends Controller
     {
         $perfil = session('perfil');
 
+
         if ($perfil === 'comprador') {
             $solicitudes = Solicitud::all(); // Puedes filtrar aquí según sea necesario
             return view('comprador.solicitudes', compact('solicitudes'));
@@ -44,26 +45,51 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
+            'tipo' => 'required|in:producto,servicio,proveedor',
             'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:500',
-            'proveedor_id' => 'required|exists:proveedores,id',
-            'empresa_id' => 'required|exists:empresas,id',
-            'servicio_id' => 'required|exists:servicios_tecnicos,id',
-            'estado' => 'required|in:pendiente,aprobado,rechazado'
         ]);
 
-        Solicitud::create([
+        $solicitudData = [
+            'tipo' => $request->tipo, // Asegúrate de que este campo está en el formulario
             'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
-            'proveedor_id' => $request->proveedor_id,
-            'empresa_id' => $request->empresa_id,
-            'servicio_id' => $request->servicio_id,
-            'estado' => $request->estado,
-        ]);
+            'estado' => 'pendiente',
+            'proveedor_id' => 1,
+            'empresa_id' => 1,
+            'servicio_id' => 1,
+        ];
+
+        // Si es producto, agregar estos campos
+        if ($request->tipo === 'producto') {
+            $solicitudData = array_merge($solicitudData, [
+                'nombre' => $request->nombre,
+                'modelo' => $request->modelo,
+                'marca' => $request->marca,
+                'descripcion'  => $request->descripcion,
+                'cantidad' => $request->cantidad,
+                'presupuesto' => (float) $request->presupuesto, // Convertir a float para evitar errores
+                'link_drive' => $request->link_drive,
+            ]);
+        }
+
+        // Si es servicio, agregar estos campos
+        if ($request->tipo === 'servicio') {
+            $solicitudData = array_merge($solicitudData, [
+                'tipo_solicitudServicio' => $request->tipo_solicitudServicio,
+                'descripcion_servicio' => $request->descripcion_servicio,
+                'presupuesto_servicio' => $request->presupuesto_servicio,
+                'descripcion'  => $request->descripcion,
+            ]);
+        }
+
+        // Guardar en la base de datos
+        $solicitud = Solicitud::create($solicitudData);
+
 
         return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud creada correctamente.');
     }
+
 
     /**
      * Muestra una solicitud específica.
@@ -144,5 +170,38 @@ class SolicitudController extends Controller
     {
         $solicitud->forceDelete();
         return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud eliminada permanentemente.');
+    }
+
+    public function guardar(Request $request)
+    {
+        // Insertar tres registros con datos predeterminados
+        Solicitud::create([
+            'proveedor_id' => 1,
+            'empresa_id' => 1,
+            'servicio_id' => 1,
+            'descripcion' => 'Solicitud de tipo Producto',
+            'estado' => 'pendiente',
+            'titulo' => 'Hola',
+        ]);
+
+        Solicitud::create([
+            'proveedor_id' => 2,
+            'empresa_id' => 2,
+            'servicio_id' => 2,
+            'descripcion' => 'Solicitud de tipo Servicio',
+            'estado' => 'pendiente',
+            'titulo' => 'Hola2',
+        ]);
+
+        Solicitud::create([
+            'proveedor_id' => 2,
+            'empresa_id' => 2,
+            'servicio_id' => 2,
+            'descripcion' => 'Solicitud de tipo Profesional',
+            'estado' => 'pendiente',
+            'titulo' => 'Hola3',
+        ]);
+
+        return redirect()->back()->with('success', 'Solicitudes guardadas correctamente');
     }
 }

@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const tiempo = document.getElementById('tiempo');
     const mensajeExito = document.getElementById("modal_exito");
     const cerrarModal = document.getElementById("cerrar_modal");
+    const tipoInput = document.getElementById("tipo");
+    const formulario = document.getElementById("formulario_solicitud");
+
 
 
 
@@ -68,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Resetear campos antes de asignar valores nuevos
         titulo.value = "";
+        tipoInput.value = "";
         nombre.value = "";
         modelo.value = "";
         marca.value = "";
@@ -122,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetFormulario() {
         // Restablecer los valores de los campos
         document.getElementById('titulo').value = '';
+        document.getElementById('tipo').value = '';
         document.getElementById('nombre').value = '';
         document.getElementById('modelo').value = '';
         document.getElementById('marca').value = '';
@@ -143,5 +148,24 @@ document.addEventListener('DOMContentLoaded', function () {
     cerrarModal.addEventListener("click", function () {
         mensajeExito.classList.add("hidden");
         window.location.href = "/comprador/solicitudes";
+    });
+
+    tipoSolicitud.addEventListener("change", function () {
+        const tipoSeleccionado = tipoSolicitud.value;
+        tipoInput.value = tipoSolicitud.value;
+        // Actualiza el campo oculto
+        tipoInput.value = tipoSeleccionado;
+        document.getElementById("tipo").value = tipoSolicitud.value;
+
+        // Muestra el formulario y oculta los demás campos
+        formulario.classList.remove("hidden");
+        productoFields.classList.add("hidden");
+        servicioFields.classList.add("hidden");
+
+        if (tipoSeleccionado === "producto") {
+            productoFields.classList.remove("hidden");
+        } else if (tipoSeleccionado === "servicio") {
+            servicioFields.classList.remove("hidden");
+        }
     });
 });

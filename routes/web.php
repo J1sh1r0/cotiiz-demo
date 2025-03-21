@@ -52,6 +52,8 @@ Route::prefix('comprador')->group(function () {
     Route::get('/solicitudes/crear', [SolicitudController::class, 'create'])->name('comprador.solicitudes.crear');
     Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('comprador.solicitudes.store');
     Route::get('/solicitudes/{id}', [SolicitudController::class, 'show'])->name('comprador.solicitudes.ver');
+    Route::post('/guardar-solicitud', [SolicitudController::class, 'guardar'])->name('guardar.solicitud');
+
 
     // 🚀 Ruta para usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('comprador.usuarios');
