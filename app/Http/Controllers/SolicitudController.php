@@ -143,24 +143,16 @@ class SolicitudController extends Controller
     /**
      * Elimina una solicitud de la base de datos.
      */
-    public function destroy(Solicitud $solicitud)
+    /**
+     * Elimina una solicitud de la base de datos.
+     */
+    public function destroy($id)
     {
-        $user = auth()->user();
-
-        if (!$user) {
-            return redirect()->route(session('perfil') . '.solicitudes')->with('error', 'Debes estar autenticado para eliminar solicitudes.');
-        }
-
-        if (session('perfil') === 'comprador' && $solicitud->empresa_id !== $user->empresa_id) {
-            return redirect()->route('comprador.solicitudes')->with('error', 'No tienes permiso para eliminar esta solicitud.');
-        }
-
-        if (session('perfil') === 'proveedor' && $solicitud->proveedor_id !== $user->proveedor_id) {
-            return redirect()->route('proveedor.solicitudes')->with('error', 'No tienes permiso para eliminar esta solicitud.');
-        }
-
+        $solicitud = Solicitud::findOrFail($id);
         $solicitud->delete();
-        return redirect()->route(session('perfil') . '.solicitudes')->with('success', 'Solicitud eliminada correctamente.');
+
+        return redirect()->route('comprador.solicitudes')
+            ->with('success', 'Solicitud eliminada correctamente');
     }
 
     /**
@@ -203,5 +195,17 @@ class SolicitudController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Solicitudes guardadas correctamente');
+    }
+
+    public function info($id)
+    {
+        $solicitud = Solicitud::findOrFail($id);
+        return view('comprador.solicitudes.info', compact('solicitud'));
+    }
+
+    public function chat($id)
+    {
+        $solicitud = Solicitud::findOrFail($id);
+        return view('comprador.solicitudes.chat', compact('solicitud'));
     }
 }

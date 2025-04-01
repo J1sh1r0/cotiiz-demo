@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subcuenta; // Asegúrate de que el modelo Subcuenta existe
+use App\Models\User; // Asegúrate de que este modelo existe;
+
 
 class SubcuentaController extends Controller
 {
@@ -12,7 +14,9 @@ class SubcuentaController extends Controller
      */
     public function index()
     {
-        $subcuentas = Subcuenta::all();
+        // Obtener usuarios que deben aparecer como subcuentas
+        $subcuentas = User::all();
+
         return view('comprador.subcuentas', compact('subcuentas'));
     }
 
