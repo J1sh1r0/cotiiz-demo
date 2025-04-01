@@ -54,15 +54,27 @@ Route::prefix('comprador')->group(function () {
         'destroy' => 'comprador.empresas.destroy',
     ]);
 
-    // 📌 Rutas para Solicitudes
+    // Rutas para Solicitudes
     Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('comprador.solicitudes');
     Route::get('/solicitudes/crear', [SolicitudController::class, 'create'])->name('comprador.solicitudes.crear');
     Route::post('/solicitudes', [SolicitudController::class, 'store'])->name('comprador.solicitudes.store');
-    Route::get('/solicitudes/{id}', [SolicitudController::class, 'show'])->name('comprador.solicitudes.ver');
+    Route::get('/solicitudes/{id}/ver', [SolicitudController::class, 'show'])->name('comprador.solicitudes.ver');
+    Route::get('/solicitudes/{id}/info', [SolicitudController::class, 'info'])->name('comprador.solicitudes.info');
+    Route::get('/solicitudes/{id}/editar', [SolicitudController::class, 'edit'])->name('comprador.solicitudes.editar');
+    Route::put('/solicitudes/{id}', [SolicitudController::class, 'update'])->name('comprador.solicitudes.actualizar');
+    Route::delete('/solicitudes/{id}', [SolicitudController::class, 'destroy'])->name('comprador.solicitudes.eliminar');
+    Route::post('/guardar-solicitud', [SolicitudController::class, 'guardar'])->name('guardar.solicitud');
+    Route::get('/solicitudes/{id}/chat', [SolicitudController::class, 'chat']) ->name('comprador.solicitudes.chat');
+
 
     // 🚀 Ruta para usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('comprador.usuarios');
-    
+    Route::get('/usuarios/crear', [UsuarioController::class, 'create'])->name('comprador.usuarios.create');
+    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('comprador.usuarios.store');
+    Route::get('/usuarios/{usuario}/info', [UsuarioController::class, 'show'])->name('comprador.usuarios.show');
+    Route::get('/usuarios/{usuario}/editar', [UsuarioController::class, 'edit'])->name('comprador.usuarios.edit');
+    Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('comprador.usuarios.update');
+    Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('comprador.usuarios.destroy');
 
     // 🔹 Ruta para subcuentas
     Route::get('/subcuentas', [SubcuentaController::class, 'index'])->name('comprador.subcuentas');
@@ -71,7 +83,7 @@ Route::prefix('comprador')->group(function () {
 
 Route::prefix('proveedor')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('proveedor.dashboard');
-    //Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedor.proveedores'); 
+    //Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedor.proveedores');
 
     Route::resource('proveedores', ProveedorController::class)->names([
         'index' => 'proveedores.proveedores',

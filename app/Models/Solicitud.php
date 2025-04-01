@@ -12,7 +12,29 @@ class Solicitud extends Model
     use HasFactory;
 
     protected $table = 'solicitudes';
-    protected $fillable = ['titulo', 'descripcion', 'estado', 'empresa_id', 'proveedor_id', 'servicio_id'];
+    protected $fillable = [
+        'titulo',
+        'descripcion',
+        'proveedor_id',
+        'empresa_id',
+        'servicio_id',
+        'estado',
+        'tipo',
+        'modelo',
+        'nombre',
+        'marca',
+        'cantidad',
+        'presupuesto',
+        'link_drive',
+        'tipo_solicitudServicio',
+        'descripcion_servicio',
+        'presupuesto_servicio',
+        'trabajo',
+        'detalles',
+        'conocimientos',
+        'cursos',
+        'tiempo'
+    ];
 
     public function proveedor()
     {
@@ -28,4 +50,15 @@ class Solicitud extends Model
     {
         return $this->belongsTo(ServicioTecnico::class);
     }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::creating(function ($solicitud) {
+    //         $solicitud->proveedor_id = $solicitud->proveedor_id ?? 1;
+    //         $solicitud->empresa_id = $solicitud->empresa_id ?? 1;
+    //         $solicitud->servicio_id = $solicitud->servicio_id ?? 1;
+    //     });
+    // }
 }
