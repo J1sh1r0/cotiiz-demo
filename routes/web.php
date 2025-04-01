@@ -5,8 +5,15 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ServicioTecnicoController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\ProfesionalController;
+use App\Http\Controllers\ProveedorUsuariosController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\SubcuentaController;
+use App\Http\Controllers\ProveedorSubcuentaController;
+use App\Http\Controllers\ProveedorSolicitudController;
+use App\Models\Proveedor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -55,6 +62,7 @@ Route::prefix('comprador')->group(function () {
 
     // 🚀 Ruta para usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('comprador.usuarios');
+    
 
     // 🔹 Ruta para subcuentas
     Route::get('/subcuentas', [SubcuentaController::class, 'index'])->name('comprador.subcuentas');
@@ -63,8 +71,56 @@ Route::prefix('comprador')->group(function () {
 
 Route::prefix('proveedor')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('proveedor.dashboard');
-    Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedor.proveedores'); // 🔹 Nueva ruta
-    Route::get('/solicitudes', [SolicitudController::class, 'index'])->name('proveedor.solicitudes');
+    //Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedor.proveedores'); 
+
+    Route::resource('proveedores', ProveedorController::class)->names([
+        'index' => 'proveedores.proveedores',
+        'create' => 'proveedores.create',
+        'store' => 'proveedores.store',
+        'show' => 'proveedores.show',
+        'edit' => 'proveedores.edit',
+        'update' => 'proveedores.update',
+        'destroy' => 'proveedores.destroy',
+    ]);
+
+    // Ruta para Solicitudes
+    Route::get('/solicitudes', [ProveedorSolicitudController::class, 'index'])->name('proveedor.solicitudes');
+    Route::get('/solicitudes/crear', [ProveedorSolicitudController::class, 'create'])->name('proveedor.solicitudes.crear');
+    Route::post('/solicitudes', [ProveedorSolicitudController::class, 'store'])->name('proveedor.solicitudes.store');
+    Route::get('/solicitudes/{id}', [ProveedorSolicitudController::class, 'show'])->name('proveedor.solicitudes.ver');
+
+    // Productos
+    Route::get('/productos', [ProductController::class, 'index'])->name('productos.index');
+    Route::get('/productos/create', [ProductController::class, 'create'])->name('productos.create');
+    Route::post('/productos', [ProductController::class, 'store'])->name('productos.store');
+    Route::get('/productos/{id}', [ProductController::class, 'show'])->name('productos.show');
+    Route::get('/productos/{id}/edit', [ProductController::class, 'edit'])->name('productos.edit');
+    Route::put('/productos/{id}', [ProductController::class, 'update'])->name('productos.update');
+    Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos.destroy');
+
+    Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');
+    Route::get('/servicios/create', [ServicioController::class, 'create'])->name('servicios.create');
+    Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
+    Route::get('/servicios/{id}', [ServicioController::class, 'show'])->name('servicios.show');
+    Route::get('/servicios/{id}/edit', [ServicioController::class, 'edit'])->name('servicios.edit');
+    Route::put('/servicios/{id}', [ServicioController::class, 'update'])->name('servicios.update');
+    Route::delete('/servicios/{id}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
+
+    Route::get('/profesionales', [ProfesionalController::class, 'index'])->name('profesionales.index');
+    Route::get('/profesionales/create', [ProfesionalController::class, 'create'])->name('profesionales.create');
+    Route::post('/profesionales', [ProfesionalController::class, 'store'])->name('profesionales.store');
+    Route::get('/profesionales/{id}', [ProfesionalController::class, 'show'])->name('profesionales.show');
+    Route::get('/profesionales/{id}/edit', [ProfesionalController::class, 'edit'])->name('profesionales.edit');
+    Route::put('/profesionales/{id}', [ProfesionalController::class, 'update'])->name('profesionales.update');
+    Route::delete('/profesionales/{id}', [ProfesionalController::class, 'destroy'])->name('profesionales.destroy');
+
+    // Ruta para usuarios
+    Route::get('/usuarios-proveedor', [ProveedorUsuariosController::class, 'index'])->name('proveedor.usuarios.index');
+    Route::get('/usuarios-proveedor/create', [ProveedorUsuariosController::class, 'create'])->name('proveedor.usuarios.create');
+    Route::post('/usuarios-proveedor', [ProveedorUsuariosController::class, 'store'])->name('proveedor.usuarios.store');
+
+    // Ruta para subcuentas php artisan make:controller ProveedorSolicitudController --resource
+    Route::get('/subcuentas-proveedor', [ProveedorSubcuentaController::class, 'index'])->name('proveedor.subcuentas');
 });
 
 Route::prefix('profesional')->group(function () {
