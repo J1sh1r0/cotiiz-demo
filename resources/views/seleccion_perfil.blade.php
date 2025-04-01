@@ -3,192 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selecciona tu Perfil | Cotiiz Demo</title>
+    <title>Selección de Perfil | Cotiiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
-        /* Estilos generales */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-            font-family: 'Arial', sans-serif;
-        }
-
-        /* Fondo animado */
-        .animated-bg {
-            position: absolute;
+        /* Fondo de partículas interactivo */
+        #particles-js {
+            position: fixed;
             width: 100%;
             height: 100%;
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #e94560);
-            background-size: 400% 400%;
-            animation: gradientBG 12s ease infinite;
-            filter: brightness(0.9);
-            z-index: -2;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Partículas flotantes */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            background: linear-gradient(135deg, #0a192f 0%, #172a45 100%);
             z-index: -1;
         }
-
-        .particle {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: moveParticles linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            50% { transform: translateY(-50px) scale(1.1); opacity: 0.5; }
-            100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
-        }
-
-        /* Tarjeta en blanco */
-        .card {
-            background: #ffffff; /* Blanco sólido */
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Logo centrado */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .logo {
-            width: 140px;
-            height: auto;
-        }
-
-        /* Botones con efectos dinámicos */
-        .btn {
-            font-size: 1.2rem;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: bold;
+        
+        /* Tarjeta profesional */
+        .professional-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(10, 25, 47, 0.3);
+            padding: 2.5rem;
             width: 100%;
-            transition: all 0.3s ease-in-out;
+            max-width: 32rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .professional-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(10, 25, 47, 0.4);
+        }
+        
+        /* Botones profesionales */
+        .pro-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             color: white;
+            text-align: left;
+            border: none;
+            box-shadow: 0 4px 15px rgba(10, 25, 47, 0.2);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
         }
-
-        .btn::before {
-            content: "";
+        
+        .pro-btn::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.15);
-            transition: all 0.5s ease;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
-
-        .btn:hover::before {
-            transform: translate(-50%, -50%) scale(1);
+        
+        .pro-btn:hover::after {
+            transform: translateX(100%);
         }
-
-        /* Botón morado oscuro */
-        .btn-morado {
-            background-color: #6a0dad; /* Morado oscuro */
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        
+        .pro-btn i {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
         }
-
-        .btn-morado:hover {
-            background-color: #5a0c99;
-            transform: scale(1.05);
+        
+        .pro-btn:hover i {
+            transform: scale(1.1);
         }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 1.5s ease-in-out;
+        
+        /* Variantes de botones */
+        .pro-btn-comprador {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .pro-btn-proveedor {
+            background: linear-gradient(135deg, #1a56a1 0%, #2563eb 100%);
+        }
+        
+        .pro-btn-profesional {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        }
+        
+        /* Animaciones */
+        @keyframes cardEntrance {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .card-entrance {
+            animation: cardEntrance 0.8s ease-out forwards;
+        }
+        
+        /* Efectos de texto */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            border-radius: 3px;
         }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen p-6 font-sans antialiased">
 
-    <!-- Fondo animado -->
-    <div class="animated-bg"></div>
-
-    <!-- Partículas flotantes -->
-    <div class="particles"></div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const particleContainer = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                let size = Math.random() * 6 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.top = `${Math.random() * 100}vh`;
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.animationDuration = `${Math.random() * 8 + 5}s`;
-                particle.classList.add('particle');
-                particleContainer.appendChild(particle);
-            }
-        });
-    </script>
+    <!-- Fondo de partículas interactivo -->
+    <div id="particles-js"></div>
 
     <!-- Contenedor principal -->
-    <div class="card fade-in text-center w-full max-w-md">
-        
-        <!-- Logo de Cotiiz centrado -->
-        <div class="logo-container">
-            <img src="{{ asset('images/CotiizNFondo.png') }}" alt="Cotiiz Logo" class="logo">
+    <div class="professional-card card-entrance">
+        <!-- Logo -->
+        <div class="mb-8 flex justify-center">
+            <img src="{{ asset('images/CotiizNFondo.png') }}" alt="Cotiiz Logo" 
+                 class="w-40 transition-transform duration-300 hover:scale-105">
         </div>
 
-        <h2 class="text-3xl font-bold mb-6 text-gray-800">Selecciona tu perfil</h2>
+        <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">
+            <span class="section-title">Selecciona tu perfil</span>
+        </h1>
+        
+        <p class="text-center text-gray-600 mb-8">Accede a las herramientas específicas para tu rol</p>
+
         <form action="{{ route('guardar.perfil') }}" method="POST" class="space-y-4">
             @csrf
+            
+            <!-- Botón Comprador -->
             <button type="submit" name="perfil" value="comprador" 
-                class="btn bg-blue-500 hover:bg-blue-600 transition-all duration-300 flex items-center justify-center gap-2">
-                🛒 Comprador / Empresa
+                class="pro-btn pro-btn-comprador">
+                <i class="fas fa-building"></i>
+                <span>Comprador / Empresa</span>
+                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Gestión de compras</span>
             </button>
+
+            <!-- Botón Proveedor -->
             <button type="submit" name="perfil" value="proveedor" 
-                class="btn bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 flex items-center justify-center gap-2">
-                📦 Proveedor
+                class="pro-btn pro-btn-proveedor">
+                <i class="fas fa-boxes"></i>
+                <span>Proveedor</span>
+                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Panel de ventas</span>
             </button>
+
+            <!-- Botón Profesional -->
             <button type="submit" name="perfil" value="profesional" 
-                class="btn btn-morado transition-all duration-300 flex items-center justify-center gap-2">
-                👨‍🔧 Profesional Especializado
+                class="pro-btn pro-btn-profesional">
+                <i class="fas fa-user-tie"></i>
+                <span>Profesional Especializado</span>
+                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Servicios expertos</span>
             </button>
         </form>
     </div>
 
+    <script>
+        // Configuración de partículas.js
+        document.addEventListener("DOMContentLoaded", function() {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#3b82f6"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#3b82f6",
+                        "opacity": 0.3,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": true,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.8
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
 </body>
 </html>

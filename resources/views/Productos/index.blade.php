@@ -7,9 +7,12 @@
             <div class="px-8 py-6 border-b border-gray-100">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div class="flex items-center mb-4 md:mb-0">
-                        <i class="ri-mail-line text-2xl text-gray-600 mr-3"></i>
-                        <h1 class="text-2xl font-bold text-gray-800">Solicitudes Recibidas</h1>
+                        <i class="ri-archive-line text-2xl text-gray-600 mr-3"></i>
+                        <h1 class="text-2xl font-bold text-gray-800">Productos</h1>
                     </div>
+                    <a href="{{ route('productos.create') }}" class="flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition duration-200">
+                        <i class="ri-add-line mr-2"></i> Nuevo Producto
+                    </a>
                 </div>
             </div>
 
@@ -25,7 +28,7 @@
                         </select>
                         <span class="text-sm text-gray-600 ml-2">registros</span>
                     </div>
-
+    
                     <div class="relative w-full md:w-64">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400"></i>
@@ -33,53 +36,74 @@
                         <input type="text" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Buscar...">
                     </div>
                 </div>
-            </div>
+            </div>  
 
-            <!-- Tabla de solicitudes -->
+            <!-- Tabla de productos -->
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th scope="col" class="w-2/4 px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Título</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Imagen</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Producto</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Precio</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Descripción</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Estatus</th>
                             <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @php
-                            $solicitudes = [
-                                (object) ['titulo' => 'Solicitud de 50 laptops para oficina', 'estado' => 'pendiente'],
-                                (object) ['titulo' => 'Servicio de mantenimiento de servidores', 'estado' => 'aprobado'],
-                                (object) ['titulo' => 'Pedido de 100 sillas ergonómicas', 'estado' => 'rechazado'],
-                                (object) ['titulo' => 'Reparación de aire acondicionado', 'estado' => 'pendiente'],
-                                (object) ['titulo' => 'Cotización de impresoras láser', 'estado' => 'aprobado'],
-                                (object) ['titulo' => 'Solicitud de desarrollo de software a medida', 'estado' => 'pendiente'],
-                            ];
-                        @endphp
-                        
-                        @foreach($solicitudes as $index => $solicitud)
+                        @foreach($productos as $index => $producto)
                         <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-colors duration-150">
-                            <!-- Título -->
-                            <td class="w-2/4 px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $solicitud->titulo }}</div>
+                            <!-- Imagen -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex justify-center">
+                                    <img src="{{ asset('storage/' . $producto->foto) }}" alt="{{ $producto->nombre }}" class="h-12 w-12 rounded-full object-cover">
+                                </div>
                             </td>
-
+                            
+                            <!-- Nombre -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">{{ $producto->nombre }}</div>
+                            </td>
+                            
+                            <!-- Precio -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-blue-600">${{ number_format($producto->precio, 2) }}</div>
+                            </td>
+                            
+                            <!-- Descripción -->
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-500 line-clamp-2">{{ $producto->descripcion }}</div>
+                            </td>
+                            
                             <!-- Estatus -->
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $solicitud->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 
-                                       ($solicitud->estado == 'aprobado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800') }}">
-                                    {{ ucfirst($solicitud->estado) }}
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $producto->estatus == 'Pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }}">
+                                    {{ $producto->estatus }}
                                 </span>
                             </td>
-
+                            
                             <!-- Acciones -->
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                 <div class="flex justify-center space-x-3">
-                                    <!-- Chat -->
-                                    <a href="#" class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
-                                        <i class="ri-chat-3-line text-lg"></i>
+                                    <!-- Ver -->
+                                    <a href="{{ route('productos.show', $producto->id) }}" class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
+                                        <i class="ri-eye-line text-lg"></i>
                                     </a>
+                                    
+                                    <!-- Editar -->
+                                    <a href="{{ route('productos.edit', $producto->id) }}" class="text-yellow-500 hover:text-yellow-700 transition-colors duration-200" title="Editar">
+                                        <i class="ri-pencil-line text-lg"></i>
+                                    </a>
+                                
+                                    <!-- Eliminar -->
+                                    <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-200" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                                            <i class="ri-delete-bin-line text-lg"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -96,9 +120,9 @@
                             Mostrando
                             <span class="font-medium text-gray-700">1</span>
                             a
-                            <span class="font-medium text-gray-700">{{ count($solicitudes) }}</span>
+                            <span class="font-medium text-gray-700">{{ count($productos) }}</span>
                             de
-                            <span class="font-medium text-gray-700">{{ count($solicitudes) }}</span>
+                            <span class="font-medium text-gray-700">{{ count($productos) }}</span>
                             resultados
                         </p>
                     </div>

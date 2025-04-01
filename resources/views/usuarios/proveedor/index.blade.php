@@ -2,19 +2,17 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Encabezado mejorado -->
-    <div class="bg-white rounded-xl shadow-sm mb-8 border border-gray-100">
-        <div class="px-6 py-5 border-b border-gray-100">
+    <!-- Encabezado -->
+    <div class="bg-white rounded-lg shadow-sm mb-8">
+        <div class="px-8 py-6 border-b border-gray-100">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                 <div class="flex items-center mb-4 md:mb-0">
-                    <div class="p-2 rounded-lg bg-blue-50 text-blue-600 mr-4">
-                        <i class="fas fa-users-cog text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Subcuentas</h1>
-                        <p class="text-sm text-gray-500 mt-1">Administra los usuarios secundarios de tu cuenta</p>
-                    </div>
+                    <i class="ri-user-line text-2xl text-gray-600 mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Usuarios</h1>
                 </div>
+                <a href="{{ route('proveedor.usuarios.create') }}" class="flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition duration-200">
+                    <i class="ri-add-line mr-2"></i> Nuevo Usuario
+                </a>
             </div>
         </div>
 
@@ -40,43 +38,35 @@
             </div>
         </div>
 
-        <!-- Tabla de subcuentas -->
+        <!-- Tabla de usuarios dinámicos -->
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-100">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Permisos</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Perfil</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nombre</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Correo</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Teléfono</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Estatus</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($usuarios as $usuario)
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usuario->name }}</td>
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                {{ $usuario->perfil == 'Principal' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                 {{ $usuario->perfil }}
                             </span>
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usuario->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usuario->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usuario->phone }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                {{ $usuario->estatus == 'Activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $usuario->estatus }}
                             </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
-                                {{ $usuario->permisos }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                <i class="fas fa-edit mr-1"></i> Editar
-                            </button>
                         </td>
                     </tr>
                     @endforeach
@@ -84,27 +74,27 @@
             </table>
         </div>
 
-        <!-- Paginación -->
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 rounded-b-xl">
+         <!-- Paginación -->
+         <div class="px-6 py-4 border-t border-gray-200">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
                     <p class="text-sm text-gray-500">
                         Mostrando
                         <span class="font-medium text-gray-700">1</span>
                         a
-                        <span class="font-medium text-gray-700">3</span>
+                        <span class="font-medium text-gray-700">{{ count($usuarios) }}</span>
                         de
-                        <span class="font-medium text-gray-700">{{ $usuarios->count() }}</span>
+                        <span class="font-medium text-gray-700">{{ count($usuarios) }}</span>
                         resultados
                     </p>
                 </div>
-                <div class="flex items-center space-x-1">
+                <div class="flex items-center space-x-2">
                     <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled>
-                        <i class="fas fa-chevron-left"></i>
+                        <i class="ri-arrow-left-s-line"></i>
                     </button>
-                    <span class="px-3 py-1 bg-blue-600 text-white rounded-md">1</span>
+                    <span class="px-3 py-1 bg-blue-500 text-white rounded-md">1</span>
                     <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled>
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="ri-arrow-right-s-line"></i>
                     </button>
                 </div>
             </div>
@@ -113,4 +103,4 @@
 </div>
 @endsection
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
