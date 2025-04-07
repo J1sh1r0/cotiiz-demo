@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Servicio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServicioController extends Controller
 {
@@ -77,31 +78,47 @@ class ServicioController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $servicio = Servicio::findOrFail($id);
+{
+    $servicio = Servicio::findOrFail($id);
 
-        // Validar los datos recibidos
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'precio' => 'required|numeric',
-            'descripcion' => 'nullable|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,bmp,tiff|max:2048',
-        ]);
+    // Validar los datos recibidos
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'precio' => 'required|numeric',
+        'descripcion' => 'nullable|string',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png,bmp,tiff|max:2048',
+    ]);
 
-        $servicio->nombre = $request->nombre;
-        $servicio->precio = $request->precio;
-        $servicio->descripcion = $request->descripcion;
+    $servicio->nombre = $request->nombre;
+    $servicio->precio = $request->precio;
+    $servicio->descripcion = $request->descripcion;
 
-        // Establecer la foto si se sube una nueva
-        if ($request->hasFile('foto')) {
-            $servicio->foto = $request->file('foto')->store('servicios', 'public');
+    // Si se sube una nueva imagen, eliminamos la anterior
+    if ($request->hasFile('foto')) {
+        if ($servicio->foto && \Storage::disk('public')->exists($servicio->foto)) {
+            \Storage::disk('public')->delete($servicio->foto);
         }
 
-        // Guardar los cambios
-        $servicio->save();
-
-        return redirect()->route('Servicio.index')->with('success', 'Servicio actualizado con éxito');
+        $servicio->foto = $request->file('foto')->store('servicios', 'public');
     }
+
+    $servicio->save();
+
+    return redirect()->route('Servicio.index')->with('success', 'Servicio actualizado con éxito');
+}
+
+public function eliminarFoto($id)
+{
+    $servicio = Servicio::findOrFail($id);
+
+    if ($servicio->foto && \Storage::disk('public')->exists($servicio->foto)) {
+        \Storage::disk('public')->delete($servicio->foto);
+        $servicio->foto = null;
+        $servicio->save();
+    }
+
+    return redirect()->back()->with('success', 'Imagen eliminada correctamente.');
+}
 
     /**
      * Remove the specified resource from storage.

@@ -117,6 +117,8 @@ Route::prefix('proveedor')->group(function () {
     Route::get('/servicios/{id}/edit', [ServicioController::class, 'edit'])->name('servicios.edit');
     Route::put('/servicios/{id}', [ServicioController::class, 'update'])->name('servicios.update');
     Route::delete('/servicios/{id}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
+    Route::delete('/servicios/{id}/foto', [ServicioController::class, 'eliminarFoto'])->name('servicios.eliminarFoto');
+
 
     Route::get('/profesionales', [ProfesionalController::class, 'index'])->name('profesionales.index');
     Route::get('/profesionales/create', [ProfesionalController::class, 'create'])->name('profesionales.create');
