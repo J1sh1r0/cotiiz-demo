@@ -30,6 +30,7 @@ class ProfesionalController extends Controller
      */
     public function store(Request $request)
 {
+    // Validar los datos del formulario
     $request->validate([
         'primer_nombre' => 'required|string|max:255',
         'segundo_nombre' => 'nullable|string|max:255',
@@ -56,30 +57,33 @@ class ProfesionalController extends Controller
         'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    $data = $request->all();
+    // Inicializar los datos del formulario
+    $data = $request->except('foto', 'cv', 'titulo_1', 'titulo_2', 'ine_1', 'ine_2'); // Excluir los archivos del array $data
 
     // Guardar archivos si se subieron
     if ($request->hasFile('cv')) {
-        $data['cv'] = $request->file('cv')->store('documentos');
+        $data['cv'] = $request->file('cv')->store('documentos', 'public');
     }
     if ($request->hasFile('titulo_1')) {
-        $data['titulo_1'] = $request->file('titulo_1')->store('documentos');
+        $data['titulo_1'] = $request->file('titulo_1')->store('documentos', 'public');
     }
     if ($request->hasFile('titulo_2')) {
-        $data['titulo_2'] = $request->file('titulo_2')->store('documentos');
+        $data['titulo_2'] = $request->file('titulo_2')->store('documentos', 'public');
     }
     if ($request->hasFile('ine_1')) {
-        $data['ine_1'] = $request->file('ine_1')->store('documentos');
+        $data['ine_1'] = $request->file('ine_1')->store('documentos', 'public');
     }
     if ($request->hasFile('ine_2')) {
-        $data['ine_2'] = $request->file('ine_2')->store('documentos');
+        $data['ine_2'] = $request->file('ine_2')->store('documentos', 'public');
     }
     if ($request->hasFile('foto')) {
-        $data['foto'] = $request->file('foto')->store('imagenes');
+        $data['foto'] = $request->file('foto')->store('imagenes', 'public');
     }
 
+    // Crear un nuevo profesional con los datos
     Profesional::create($data);
 
+    // Redirigir al listado de profesionales con un mensaje de éxito
     return redirect()->route('profesionales.index')->with('success', 'Profesional agregado correctamente.');
 }
 
