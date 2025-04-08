@@ -16,7 +16,7 @@
             background: linear-gradient(135deg, #0a192f 0%, #172a45 100%);
             z-index: -1;
         }
-        
+
         /* Tarjeta profesional */
         .professional-card {
             background: rgba(255, 255, 255, 0.97);
@@ -29,12 +29,12 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(5px);
         }
-        
+
         .professional-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(10, 25, 47, 0.4);
         }
-        
+
         /* Botones profesionales */
         .pro-btn {
             display: flex;
@@ -53,7 +53,7 @@
             box-shadow: 0 4px 15px rgba(10, 25, 47, 0.2);
             background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
         }
-        
+
         .pro-btn::after {
             content: '';
             position: absolute;
@@ -65,55 +65,55 @@
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
-        
+
         .pro-btn:hover::after {
             transform: translateX(100%);
         }
-        
+
         .pro-btn i {
             font-size: 1.25rem;
             transition: transform 0.3s ease;
         }
-        
+
         .pro-btn:hover i {
             transform: scale(1.1);
         }
-        
+
         /* Variantes de botones */
         .pro-btn-comprador {
             background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
         }
-        
+
         .pro-btn-proveedor {
             background: linear-gradient(135deg, #1a56a1 0%, #2563eb 100%);
         }
-        
+
         .pro-btn-profesional {
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
         }
-        
+
         /* Animaciones */
         @keyframes cardEntrance {
-            from { 
+            from {
                 opacity: 0;
                 transform: translateY(20px) scale(0.95);
             }
-            to { 
+            to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
         }
-        
+
         .card-entrance {
             animation: cardEntrance 0.8s ease-out forwards;
         }
-        
+
         /* Efectos de texto */
         .section-title {
             position: relative;
             display: inline-block;
         }
-        
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -135,29 +135,37 @@
     <div class="professional-card card-entrance">
         <!-- Logo -->
         <div class="mb-8 flex justify-center">
-            <img src="{{ asset('images/CotiizNFondo.png') }}" alt="Cotiiz Logo" 
+            <img src="{{ asset('images/CotiizNFondo.png') }}" alt="Cotiiz Logo"
                  class="w-40 transition-transform duration-300 hover:scale-105">
         </div>
 
         <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">
             <span class="section-title">Selecciona tu perfil</span>
         </h1>
-        
+
         <p class="text-center text-gray-600 mb-8">Accede a las herramientas específicas para tu rol</p>
 
         <form action="{{ route('guardar.perfil') }}" method="POST" class="space-y-4">
             @csrf
-            
+
             <!-- Botón Comprador -->
-            <button type="submit" name="perfil" value="comprador" 
+            <button type="submit" name="perfil" value="comprador"
                 class="pro-btn pro-btn-comprador">
                 <i class="fas fa-building"></i>
                 <span>Comprador / Empresa</span>
-                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Gestión de compras</span>
+                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Pruebas de compras</span>
+            </button>
+
+            <!-- Botón Empresa prueba -->
+            <button type="submit" name="perfil" value="empresa_prueba"
+                class="pro-btn pro-btn-profesional">
+                <i class="fas fa-user-tie"></i>
+                <span>Empresa prueba</span>
+                <span class="ml-auto text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">Servicios expertos</span>
             </button>
 
             <!-- Botón Proveedor -->
-            <button type="submit" name="perfil" value="proveedor" 
+            <button type="submit" name="perfil" value="proveedor"
                 class="pro-btn pro-btn-proveedor">
                 <i class="fas fa-boxes"></i>
                 <span>Proveedor</span>
@@ -165,7 +173,7 @@
             </button>
 
             <!-- Botón Profesional -->
-            <button type="submit" name="perfil" value="profesional" 
+            <button type="submit" name="perfil" value="profesional"
                 class="pro-btn pro-btn-profesional">
                 <i class="fas fa-user-tie"></i>
                 <span>Profesional Especializado</span>
