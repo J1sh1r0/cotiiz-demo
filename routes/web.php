@@ -13,6 +13,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\SubcuentaController;
 use App\Http\Controllers\ProveedorSubcuentaController;
 use App\Http\Controllers\ProveedorSolicitudController;
+use App\Http\Controllers\EmpresaPruebaController;
 use App\Models\Proveedor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
@@ -25,16 +26,17 @@ Route::get('/', function () {
 
 // 🚀 Guardar selección de perfil y redirigir
 Route::post('/seleccionar-perfil', function (Request $request) {
-    $perfil = $request->perfil;
-    session(['perfil_seleccionado' => $perfil]); // 🔹 Asegurar consistencia en la sesión
+    $perfil = $request->input('perfil');
+    session(['perfil' => $perfil]);
 
-    // Verificar que el perfil sea válido antes de redirigir
-    $perfilesValidos = ['comprador', 'proveedor', 'profesional'];
-    if (!in_array($perfil, $perfilesValidos)) {
-        return redirect()->route('seleccion.perfil')->with('error', 'Perfil no válido');
-    }
-
-    return redirect()->route($perfil . '.dashboard');
+    // Redirección condicional actualizada
+    return match ($perfil) {
+        'comprador' => redirect()->route('comprador.dashboard'),
+        'proveedor' => redirect()->route('proveedor.dashboard'),
+        'profesional' => redirect()->route('profesional.dashboard'),
+        'empresa_prueba' => redirect()->route('empresa_prueba.dashboard'), // Nueva opción
+        default => redirect()->route('seleccion.perfil')->with('error', 'Perfil no válido')
+    };
 })->name('guardar.perfil');
 
 // 📌 Ruta del dashboard genérico
@@ -64,7 +66,7 @@ Route::prefix('comprador')->group(function () {
     Route::put('/solicitudes/{id}', [SolicitudController::class, 'update'])->name('comprador.solicitudes.actualizar');
     Route::delete('/solicitudes/{id}', [SolicitudController::class, 'destroy'])->name('comprador.solicitudes.eliminar');
     Route::post('/guardar-solicitud', [SolicitudController::class, 'guardar'])->name('guardar.solicitud');
-    Route::get('/solicitudes/{id}/chat', [SolicitudController::class, 'chat']) ->name('comprador.solicitudes.chat');
+    Route::get('/solicitudes/{id}/chat', [SolicitudController::class, 'chat'])->name('comprador.solicitudes.chat');
 
 
     // 🚀 Ruta para usuarios
@@ -78,6 +80,29 @@ Route::prefix('comprador')->group(function () {
 
     // 🔹 Ruta para subcuentas
     Route::get('/subcuentas', [SubcuentaController::class, 'index'])->name('comprador.subcuentas');
+});
+
+
+///RUTAS PARA EMPRESA PRUEBA///
+Route::prefix('empresa-prueba')->group(function () {
+    // Dashboard principal
+    Route::get('/', [EmpresaPruebaController::class, 'dashboard'])->name('empresa_prueba.dashboard');
+
+    // Lista de solicitudes
+    Route::get('/solicitudes', [EmpresaPruebaController::class, 'listarSolicitudes'])->name('empresa_prueba.solicitudes');
+
+    // Flujo de creación (3 pasos)
+    Route::get('/solicitudes/seleccionar-tipo', [EmpresaPruebaController::class, 'seleccionarTipo'])->name('empresa_prueba.solicitudes.seleccionar-tipo');
+    Route::get('/solicitudes/crear/{tipo}', [EmpresaPruebaController::class, 'crearSolicitud'])->name('empresa_prueba.solicitudes.crear');
+    Route::post('/solicitudes/guardar/{tipo}', [EmpresaPruebaController::class, 'guardarSolicitud'])->name('empresa_prueba.solicitudes.guardar');
+
+    // Datos de prueba
+    Route::get('/solicitudes/{tipo}/rellenar-datos-prueba', [EmpresaPruebaController::class, 'rellenarDatosPrueba']);
+
+    Route::get('/solicitudes/{id}', [EmpresaPruebaController::class, 'ver'])->name('empresa_prueba.solicitudes.ver');
+    Route::get('/solicitudes/{id}/editar', [EmpresaPruebaController::class, 'editar'])->name('empresa_prueba.solicitudes.editar');
+    Route::put('/solicitudes/{id}', [EmpresaPruebaController::class, 'actualizar'])->name('empresa_prueba.solicitudes.actualizar');
+    Route::delete('/solicitudes/{id}', [EmpresaPruebaController::class, 'eliminar'])->name('empresa_prueba.solicitudes.eliminar');
 });
 
 
