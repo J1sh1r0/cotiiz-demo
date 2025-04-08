@@ -54,10 +54,6 @@
                     <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                         @foreach ($solicitudes as $solicitud)
                         <tr class="hover:bg-gray-100 transition-colors duration-150">
-                            <!-- Número -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $loop->iteration }}</div>
-                            </td>
 
                             <!-- Título -->
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -128,51 +124,60 @@
         </div>
     </div>
 
-    <!-- Modal para Solicitudes -->
-    <div id="solicitudModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 max-w-2xl shadow-xl">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-xl font-bold text-gray-800">Opciones de Solicitud</h3>
-                <button onclick="closeSolicitudModal()" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
-                    <i class="ri-close-line text-2xl"></i>
-                </button>
-            </div>
+<!-- Modal para Solicitudes - Versión compacta -->
+<div id="solicitudModal" class="fixed inset-0 bg-gray-400/30 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl overflow-hidden w-full max-w-2xl shadow-lg">
+        <!-- Encabezado del modal -->
+        <div class="bg-gray-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="text-lg font-medium text-gray-700">Detalles de Solicitud</h3>
+            <button onclick="closeSolicitudModal()" 
+                class="text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1 rounded-full hover:bg-gray-200">
+                <i class="ri-close-line text-xl"></i>
+            </button>
+        </div>
 
-            <!-- Contenido dinámico -->
-            <div id="solicitudModalContent" class="mb-4 p-4 bg-gray-50 rounded-lg">
-                <!-- La información de la solicitud aparecerá aquí -->
+        <!-- Contenido dinámico -->
+        <div id="solicitudModalContent" class="p-5 max-h-[60vh] overflow-y-auto bg-gray-50/50 text-sm">
+            <!-- La información de la solicitud aparecerá aquí -->
+            <div class="animate-pulse space-y-3">
+                <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+                <div class="h-3 bg-gray-200 rounded"></div>
+                <div class="h-3 bg-gray-200 rounded w-5/6"></div>
             </div>
+        </div>
 
-            <!-- Botones de acción -->
-            <div class="flex flex-wrap justify-end gap-3 mt-4">
+        <!-- Pie del modal con botones compactos en una línea -->
+        <div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
+            <div class="flex flex-nowrap justify-end gap-1.5 overflow-x-auto">
                 <a id="verSolicitudBtn" href="#"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                    <i class="ri-eye-line mr-2"></i> Ver Detalles
+                    class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-eye-line mr-1 text-sm"></i> Ver Detalles
                 </a>
                 <a id="chatSolicitudBtn" href="#"
-                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                    <i class="ri-chat-3-line mr-2"></i> Chat
+                    class="bg-teal-400 hover:bg-teal-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-chat-3-line mr-1 text-sm"></i> Chat
                 </a>
                 <a id="editarSolicitudBtn" href="#"
-                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                    <i class="ri-edit-line mr-2"></i> Editar
+                    class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-edit-line mr-1 text-sm"></i> Editar
                 </a>
                 <form id="eliminarSolicitudForm" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200"
+                        class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap"
                         onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')">
-                        <i class="ri-delete-bin-line mr-2"></i> Eliminar
+                        <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
                     </button>
                 </form>
                 <button onclick="closeSolicitudModal()"
-                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                    <i class="ri-close-line mr-2"></i> Cerrar
+                    class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-close-line mr-1 text-sm"></i> Cerrar
                 </button>
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

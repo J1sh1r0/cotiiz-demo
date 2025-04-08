@@ -134,42 +134,48 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div id="userModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 max-w-2xl shadow-xl">
-        <!-- Encabezado -->
-        <div class="flex justify-between items-center mb-4 border-b pb-2">
-            <h3 class="text-xl font-bold text-gray-800">Detalles del Usuario</h3>
-            <button onclick="closeUserModal()" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
-                <i class="ri-close-line text-2xl"></i>
+<!-- Modal de Usuario - Versión compacta -->
+<div id="userModal" class="fixed inset-0 bg-gray-400/30 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl overflow-hidden w-full max-w-2xl shadow-lg">
+        <!-- Encabezado del modal -->
+        <div class="bg-gray-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="text-lg font-medium text-gray-700">Detalles del Usuario</h3>
+            <button onclick="closeUserModal()" 
+                class="text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1 rounded-full hover:bg-gray-200">
+                <i class="ri-close-line text-xl"></i>
             </button>
         </div>
 
         <!-- Contenido dinámico -->
-        <div id="modalContent" class="mb-4 p-4 bg-gray-50 rounded-lg min-h-32">
+        <div id="modalContent" class="p-5 max-h-[60vh] overflow-y-auto bg-gray-50/50 text-sm min-h-32">
             <!-- La información del usuario aparecerá aquí -->
         </div>
 
-        <!-- Botones de acción -->
-        <div class="flex flex-wrap justify-end gap-3 mt-4">
-            <button id="btnVerInfo" onclick="loadUserInfo()"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                <i class="ri-eye-line mr-2"></i> Ver Información
-            </button>
-            <a id="editUserBtn" href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                <i class="ri-edit-line mr-2"></i> Editar
-            </a>
-            <form id="deleteUserForm" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200"
-                    onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
-                    <i class="ri-delete-bin-line mr-2"></i> Eliminar
+        <!-- Pie del modal con botones compactos en una línea -->
+        <div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
+            <div class="flex flex-nowrap justify-end gap-1.5 overflow-x-auto">
+                <button id="btnVerInfo" onclick="loadUserInfo()"
+                    class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-eye-line mr-1 text-sm"></i> Ver Información
                 </button>
-            </form>
-            <button onclick="closeUserModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center transition-colors duration-200">
-                <i class="ri-close-line mr-2"></i> Cerrar
-            </button>
+                <a id="editUserBtn" href="#" 
+                    class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-edit-line mr-1 text-sm"></i> Editar
+                </a>
+                <form id="deleteUserForm" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" 
+                        class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap"
+                        onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                        <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
+                    </button>
+                </form>
+                <button onclick="closeUserModal()" 
+                    class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
+                    <i class="ri-close-line mr-1 text-sm"></i> Cerrar
+                </button>
+            </div>
         </div>
     </div>
 </div>
