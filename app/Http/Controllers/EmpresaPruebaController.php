@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolicitudEmpresaprueba;
+use App\Models\SolicitudEmpresaPrueba;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +16,7 @@ class EmpresaPruebaController extends Controller
             ? auth()->user()->empresa_id
             : 1;
 
-        $solicitudes = SolicitudEmpresaprueba::where('empresa_id', $empresaId)
+        $solicitudes = SolicitudEmpresaPrueba::where('empresa_id', $empresaId)
             ->latest()
             ->get();
 
