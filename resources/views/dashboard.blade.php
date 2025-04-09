@@ -3,138 +3,117 @@
 @section('content')
 <div class="min-h-screen bg-gray-50 p-6">
   <div class="max-w-7xl mx-auto">
-    
-    <!-- Encabezado compacto -->
-    <div class="flex justify-between items-center mb-8">
-      <div>
-        <h1 class="text-2xl font-semibold text-gray-800">
-          <span class="text-blue-600">Cotiiz</span> Dashboard
-        </h1>
-        <p class="text-gray-500 text-sm">Panel de control principal</p>
-      </div>
-      <div class="text-sm text-gray-500">
-        Versión 2.1.0
+
+    <!-- Card horizontal de bienvenida mejorada -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl shadow-lg overflow-hidden mb-8">
+      <div class="p-6 md:p-8 flex flex-col md:flex-row items-center justify-between">
+        <div class="text-white mb-4 md:mb-0">
+          <h2 class="text-2xl md:text-3xl font-bold mb-2">¡Bienvenido a Demo Cotiiz!</h2>
+          <p class="opacity-90 text-lg">Gestiona tus cotizaciones, proveedores y solicitudes en un solo lugar</p>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-lg px-4 py-3 flex items-center hover:bg-opacity-30 transition">
+          <i class="fas fa-rocket text-white text-xl md:text-2xl mr-3"></i>
+          <span class="text-white font-medium">Nuevas funciones disponibles</span>
+        </div>
       </div>
     </div>
 
-    <!-- Sección horizontal principal -->
-    <div class="flex flex-col lg:flex-row gap-6">
+    <!-- Sección de accesos rápidos en una sola línea -->
+<div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+  <h2 class="text-xl font-semibold text-gray-800 mb-6">Accesos rápidos</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Comprador -->
+    <form action="{{ route('guardar.perfil') }}" method="POST" 
+          class="group w-full border-2 border-gray-100 rounded-xl hover:border-blue-300 hover:shadow-md transition-all">
+      @csrf
+      <input type="hidden" name="perfil" value="comprador">
+      <button type="submit" class="w-full p-5 flex items-center">
+        <div class="text-blue-500 text-3xl mr-4 group-hover:text-blue-600 transition">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="flex-1 text-left">
+          <h3 class="text-lg font-medium text-gray-800 mb-1">Comprador</h3>
+          <p class="text-gray-500 text-sm">Gestiona solicitudes y usuarios</p>
+        </div>
+        <div class="text-blue-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition flex items-center">
+          Acceder <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </div>
+      </button>
+    </form>
+
+    <!-- Proveedor -->
+    <form action="{{ route('guardar.perfil') }}" method="POST" 
+          class="group w-full border-2 border-gray-100 rounded-xl hover:border-purple-300 hover:shadow-md transition-all">
+      @csrf
+      <input type="hidden" name="perfil" value="proveedor">
+      <button type="submit" class="w-full p-5 flex items-center">
+        <div class="text-purple-500 text-3xl mr-4 group-hover:text-purple-600 transition">
+          <i class="fas fa-box-open"></i>
+        </div>
+        <div class="flex-1 text-left">
+          <h3 class="text-lg font-medium text-gray-800 mb-1">Proveedor</h3>
+          <p class="text-gray-500 text-sm">Responde a solicitudes</p>
+        </div>
+        <div class="text-purple-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition flex items-center">
+          Acceder <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </div>
+      </button>
+    </form>
+
+    <!-- Profesional -->
+    <form action="{{ route('guardar.perfil') }}" method="POST" 
+          class="group w-full border-2 border-gray-100 rounded-xl hover:border-green-300 hover:shadow-md transition-all">
+      @csrf
+      <input type="hidden" name="perfil" value="profesional">
+      <button type="submit" class="w-full p-5 flex items-center">
+        <div class="text-green-500 text-3xl mr-4 group-hover:text-green-600 transition">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="flex-1 text-left">
+          <h3 class="text-lg font-medium text-gray-800 mb-1">Profesional</h3>
+          <p class="text-gray-500 text-sm">Servicios especializados</p>
+        </div>
+        <div class="text-green-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition flex items-center">
+          Acceder <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </div>
+      </button>
+    </form>
+  </div>
+</div>
+
+    <!-- Sección de tutorial rápido -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-6">¿Cómo empezar?</h2>
       
-      <!-- Tarjetas de acceso rápido -->
-      <div class="lg:w-1/3">
-        <div class="bg-white rounded-xl shadow-sm p-6 h-full">
-          <h2 class="font-medium text-gray-700 mb-4">Accesos rápidos</h2>
-          
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Comprador -->
-            <a href="{{ route('comprador.solicitudes') }}" 
-               class="p-4 border rounded-lg hover:border-blue-300 hover:bg-blue-50 transition flex flex-col items-center">
-              <div class="text-blue-500 mb-2">
-                <i class="fas fa-shopping-cart text-2xl"></i>
-              </div>
-              <span class="text-sm font-medium">Comprador</span>
-            </a>
-            
-            <!-- Proveedor -->
-            <a href="{{ route('proveedor.solicitudes') }}" 
-               class="p-4 border rounded-lg hover:border-purple-300 hover:bg-purple-50 transition flex flex-col items-center">
-              <div class="text-purple-500 mb-2">
-                <i class="fas fa-box-open text-2xl"></i>
-              </div>
-              <span class="text-sm font-medium">Proveedor</span>
-            </a>
-            
-            <!-- Profesional -->
-            <a href="{{ route('profesional.servicios') }}" 
-               class="p-4 border rounded-lg hover:border-green-300 hover:bg-green-50 transition flex flex-col items-center">
-              <div class="text-green-500 mb-2">
-                <i class="fas fa-user-tie text-2xl"></i>
-              </div>
-              <span class="text-sm font-medium">Profesional</span>
-            </a>
-            
-            <!-- Configuración -->
-            <a href="#" 
-               class="p-4 border rounded-lg hover:border-gray-300 hover:bg-gray-50 transition flex flex-col items-center">
-              <div class="text-gray-500 mb-2">
-                <i class="fas fa-cog text-2xl"></i>
-              </div>
-              <span class="text-sm font-medium">Configuración</span>
-            </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="flex items-start space-x-4 p-3 hover:bg-gray-50 rounded-lg transition">
+          <div class="flex-shrink-0 bg-blue-100 text-blue-600 p-3 rounded-lg">
+            <i class="fas fa-user-plus text-lg"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-1">1. Selecciona tu perfil</h3>
+            <p class="text-gray-600 text-sm">Elige entre Comprador, Proveedor o Profesional para acceder a las funcionalidades.</p>
           </div>
         </div>
-      </div>
-      
-      <!-- Métricas -->
-      <div class="lg:w-2/3">
-        <div class="bg-white rounded-xl shadow-sm p-6 h-full">
-          <h2 class="font-medium text-gray-700 mb-4">Métricas clave</h2>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- Empresas -->
-            <div class="border rounded-lg p-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-gray-500">Empresas</p>
-                  <p class="text-2xl font-semibold mt-1">{{ $empresas ?? 0 }}</p>
-                </div>
-                <div class="text-blue-500 bg-blue-50 p-3 rounded-full">
-                  <i class="fas fa-building"></i>
-                </div>
-              </div>
-              <div class="mt-3 h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500 rounded-full" style="width: 70%"></div>
-              </div>
-            </div>
-            
-            <!-- Proveedores -->
-            <div class="border rounded-lg p-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-gray-500">Proveedores</p>
-                  <p class="text-2xl font-semibold mt-1">{{ $proveedores ?? 0 }}</p>
-                </div>
-                <div class="text-purple-500 bg-purple-50 p-3 rounded-full">
-                  <i class="fas fa-truck"></i>
-                </div>
-              </div>
-              <div class="mt-3 h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-purple-500 rounded-full" style="width: 55%"></div>
-              </div>
-            </div>
-            
-            <!-- Solicitudes -->
-            <div class="border rounded-lg p-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-gray-500">Solicitudes</p>
-                  <p class="text-2xl font-semibold mt-1">{{ $solicitudes ?? 0 }}</p>
-                </div>
-                <div class="text-green-500 bg-green-50 p-3 rounded-full">
-                  <i class="fas fa-file-alt"></i>
-                </div>
-              </div>
-              <div class="mt-3 h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-green-500 rounded-full" style="width: 40%"></div>
-              </div>
-            </div>
+        
+        <div class="flex items-start space-x-4 p-3 hover:bg-gray-50 rounded-lg transition">
+          <div class="flex-shrink-0 bg-yellow-100 text-yellow-600 p-3 rounded-lg">
+            <i class="fas fa-compass text-lg"></i>
           </div>
-          
-          <!-- Gráfico simple (placeholder) -->
-          <div class="mt-6 border rounded-lg p-4 bg-gray-50">
-            <div class="flex justify-between items-center mb-3">
-              <h3 class="text-sm font-medium text-gray-700">Actividad reciente</h3>
-              <span class="text-xs text-gray-500">Últimos 7 días</span>
-            </div>
-            <div class="h-40 flex items-end space-x-1">
-              <div class="w-full bg-blue-200 rounded-t" style="height: 30%"></div>
-              <div class="w-full bg-blue-300 rounded-t" style="height: 50%"></div>
-              <div class="w-full bg-blue-400 rounded-t" style="height: 70%"></div>
-              <div class="w-full bg-blue-500 rounded-t" style="height: 90%"></div>
-              <div class="w-full bg-blue-400 rounded-t" style="height: 60%"></div>
-              <div class="w-full bg-blue-300 rounded-t" style="height: 40%"></div>
-              <div class="w-full bg-blue-200 rounded-t" style="height: 20%"></div>
-            </div>
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-1">2. Explora las funciones</h3>
+            <p class="text-gray-600 text-sm">Navega por los diferentes módulos y descubre las herramientas disponibles.</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start space-x-4 p-3 hover:bg-gray-50 rounded-lg transition">
+          <div class="flex-shrink-0 bg-green-100 text-green-600 p-3 rounded-lg">
+            <i class="fas fa-rocket text-lg"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-1">3. Comienza a usar</h3>
+            <p class="text-gray-600 text-sm">Crea tu primera solicitud o cotización según tu perfil.</p>
           </div>
         </div>
       </div>

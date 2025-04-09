@@ -37,6 +37,23 @@
 
         <!-- Primera fila de tarjetas horizontales -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Foto profesional -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-4">Foto Profesional</h3>
+                <div class="flex justify-center">
+                    @if($profesional->foto)
+                    <img src="{{ asset('storage/' . $profesional->foto) }}" 
+                         alt="{{ $profesional->primer_nombre }}" 
+                         class="w-48 h-48 object-cover rounded-lg shadow-md">
+                    @else
+                    <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    @endif
+                </div>
+            </div>
             <!-- Información de contacto -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-4 flex items-center">
@@ -66,7 +83,10 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- Segunda fila de tarjetas horizontales -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <!-- Dirección -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-4 flex items-center">
@@ -82,10 +102,6 @@
                     <p class="text-gray-700">{{ $profesional->pais }}. CP: {{ $profesional->codigo_postal }}</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Segunda fila de tarjetas horizontales -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <!-- Redes sociales -->
             @if($profesional->facebook || $profesional->twitter || $profesional->instagram || $profesional->linkedin)
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
@@ -120,23 +136,7 @@
             </div>
             @endif
 
-            <!-- Foto profesional -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-4">Foto Profesional</h3>
-                <div class="flex justify-center">
-                    @if($profesional->foto)
-                    <img src="{{ asset('storage/' . $profesional->foto) }}" 
-                         alt="{{ $profesional->primer_nombre }}" 
-                         class="w-48 h-48 object-cover rounded-lg shadow-md">
-                    @else
-                    <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    @endif
-                </div>
-            </div>
+
         </div>
 
         <!-- Tercera fila - Documentos (ocupa todo el ancho) -->

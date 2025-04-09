@@ -142,6 +142,8 @@ Route::prefix('proveedor')->group(function () {
     Route::get('/servicios/{id}/edit', [ServicioController::class, 'edit'])->name('servicios.edit');
     Route::put('/servicios/{id}', [ServicioController::class, 'update'])->name('servicios.update');
     Route::delete('/servicios/{id}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
+    Route::delete('/servicios/{id}/foto', [ServicioController::class, 'eliminarFoto'])->name('servicios.eliminarFoto');
+
 
     Route::get('/profesionales', [ProfesionalController::class, 'index'])->name('profesionales.index');
     Route::get('/profesionales/create', [ProfesionalController::class, 'create'])->name('profesionales.create');
@@ -155,6 +157,10 @@ Route::prefix('proveedor')->group(function () {
     Route::get('/usuarios-proveedor', [ProveedorUsuariosController::class, 'index'])->name('proveedor.usuarios.index');
     Route::get('/usuarios-proveedor/create', [ProveedorUsuariosController::class, 'create'])->name('proveedor.usuarios.create');
     Route::post('/usuarios-proveedor', [ProveedorUsuariosController::class, 'store'])->name('proveedor.usuarios.store');
+    Route::get('/usuarios/{usuario}/info', [ProveedorUsuariosController::class, 'show'])->name('proveedor.usuarios.show');
+    Route::get('/usuarios/{usuario}/editar', [ProveedorUsuariosController::class, 'edit'])->name('proveedor.usuarios.edit');
+    Route::put('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'update'])->name('proveedor.usuarios.update');
+    Route::delete('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'destroy'])->name('proveedor.usuarios.destroy');
 
     // Ruta para subcuentas php artisan make:controller ProveedorSolicitudController --resource
     Route::get('/subcuentas-proveedor', [ProveedorSubcuentaController::class, 'index'])->name('proveedor.subcuentas');
