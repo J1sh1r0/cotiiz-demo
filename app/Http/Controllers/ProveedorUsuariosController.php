@@ -108,9 +108,13 @@ class ProveedorUsuariosController extends Controller
     /**
      * Muestra los detalles de un usuario proveedor.
      */
-    public function show($id)
+    public function show(ProveedorUsuario $usuario)
     {
-        $usuario = ProveedorUsuario::findOrFail($id);
+        // Verifica si el usuario existe
+        if (!$usuario) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+        
         return view('usuarios.proveedor.show', compact('usuario'));
     }
 

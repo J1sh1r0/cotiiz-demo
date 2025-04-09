@@ -157,6 +157,10 @@ Route::prefix('proveedor')->group(function () {
     Route::get('/usuarios-proveedor', [ProveedorUsuariosController::class, 'index'])->name('proveedor.usuarios.index');
     Route::get('/usuarios-proveedor/create', [ProveedorUsuariosController::class, 'create'])->name('proveedor.usuarios.create');
     Route::post('/usuarios-proveedor', [ProveedorUsuariosController::class, 'store'])->name('proveedor.usuarios.store');
+    Route::get('/usuarios/{usuario}/info', [ProveedorUsuariosController::class, 'show'])->name('proveedor.usuarios.show');
+    Route::get('/usuarios/{usuario}/editar', [ProveedorUsuariosController::class, 'edit'])->name('proveedor.usuarios.edit');
+    Route::put('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'update'])->name('proveedor.usuarios.update');
+    Route::delete('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'destroy'])->name('proveedor.usuarios.destroy');
 
     // Ruta para subcuentas php artisan make:controller ProveedorSolicitudController --resource
     Route::get('/subcuentas-proveedor', [ProveedorSubcuentaController::class, 'index'])->name('proveedor.subcuentas');

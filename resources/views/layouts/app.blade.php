@@ -156,15 +156,15 @@
                                 <i class="fas fa-user-graduate nav-icon text-center text-purple-300"></i>
                                 <span class="ml-3">Profesionales</span>
                             </a>
-                            <a href="{{ route('proveedor.subcuentas') }}"
-                                class="nav-item flex items-center rounded-lg transition-all {{ Route::is('proveedor.subcuentas') ? 'bg-blue-600 text-white' : 'hover:bg-gray-700 hover:text-white' }}">
-                                <i class="fas fa-key nav-icon text-center text-orange-300"></i>
-                                <span class="ml-3">Subcuentas</span>
-                            </a>
                             <a href="{{ route('proveedor.usuarios.index') }}"
                                 class="nav-item flex items-center rounded-lg transition-all {{ Route::is('proveedor.usuarios') ? 'bg-blue-600 text-white' : 'hover:bg-gray-700 hover:text-white' }}">
                                 <i class="fas fa-users nav-icon text-center text-cyan-300"></i>
                                 <span class="ml-3">Usuarios</span>
+                            </a>
+                            <a href="{{ route('proveedor.subcuentas') }}"
+                                class="nav-item flex items-center rounded-lg transition-all {{ Route::is('proveedor.subcuentas') ? 'bg-blue-600 text-white' : 'hover:bg-gray-700 hover:text-white' }}">
+                                <i class="fas fa-key nav-icon text-center text-orange-300"></i>
+                                <span class="ml-3">Subcuentas</span>
                             </a>
                         @endif
 
