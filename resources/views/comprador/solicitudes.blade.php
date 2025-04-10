@@ -41,60 +41,61 @@
             </div>
 
             <!-- Tabla de solicitudes -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Título</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Estado</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Fecha de Creación</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                        @foreach ($solicitudes as $solicitud)
-                        <tr class="hover:bg-gray-100 transition-colors duration-150">
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Título</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Estado</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Fecha de Creación</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+            @foreach ($solicitudes as $solicitud)
+            <tr class="hover:bg-gray-100 transition-colors duration-150 
+                odd:bg-gray-50 even:bg-white">
 
-                            <!-- Título -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $solicitud->titulo }}</div>
-                            </td>
+                <!-- Título -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">{{ $solicitud->titulo }}</div>
+                </td>
 
-                            <!-- Estado -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $solicitud->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 
-                                       ($solicitud->estado == 'aprobado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800') }}">
-                                    {{ ucfirst($solicitud->estado) }}
-                                </span>
-                            </td>
+                <!-- Estado -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        {{ $solicitud->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 
+                           ($solicitud->estado == 'aprobado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800') }}">
+                        {{ ucfirst($solicitud->estado) }}
+                    </span>
+                </td>
 
-                            <!-- Fecha -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">{{ $solicitud->created_at->format('d/m/Y') }}</div>
-                            </td>
+                <!-- Fecha -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-500">{{ $solicitud->created_at->format('d/m/Y') }}</div>
+                </td>
 
-                            <!-- Acciones -->
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <div class="flex justify-center space-x-3">
-                                    <!-- Ver -->
-                                    <button onclick="openSolicitudModal({{ $solicitud->id }})" 
-                                        class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
-                                        <i class="ri-eye-line text-lg"></i>
-                                    </button>
-                                    
-                                    <!-- Chat -->
-                                    <a href="{{ route('comprador.solicitudes.chat', $solicitud->id) }}"
-                                        class="text-green-500 hover:text-green-700 transition-colors duration-200" title="Acceder al chat">
-                                        <i class="ri-chat-3-line text-lg"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                <!-- Acciones -->
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                    <div class="flex justify-center space-x-3">
+                        <!-- Ver -->
+                        <button onclick="openSolicitudModal({{ $solicitud->id }})" 
+                            class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
+                            <i class="ri-eye-line text-lg"></i>
+                        </button>
+                        
+                        <!-- Chat -->
+                        <a href="{{ route('comprador.solicitudes.chat', $solicitud->id) }}"
+                            class="text-green-500 hover:text-green-700 transition-colors duration-200" title="Acceder al chat">
+                            <i class="ri-chat-3-line text-lg"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
             <!-- Paginación -->
             <div class="px-6 py-4 border-t border-gray-200">

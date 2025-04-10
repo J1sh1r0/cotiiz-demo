@@ -299,6 +299,11 @@
             }
         }
     </script>
+<style>
+    #deleteModal {
+    z-index: 9999; /* Esto asegura que el modal está por encima de los otros elementos */
+}
+</style>
 @endsection
 
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">

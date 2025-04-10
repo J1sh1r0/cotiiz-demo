@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Encabezado -->
+        <!-- Encabezado --> 
         <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
             <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-8 py-6 border-b border-gray-200">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -22,45 +22,58 @@
                     @csrf
                     @method('PUT')
 
-                        <!-- Foto del Profesional -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Foto del Profesional</label>
-                            <div class="mt-1">
-                                <!-- Contenedor dinámico que muestra la imagen actual o el área de carga -->
-                                <div id="image-upload-container" class="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                                    <!-- Imagen actual o vista previa -->
-                                    <div id="image-preview" class="{{ $profesional->foto ? '' : 'hidden' }}">
-                                        <div class="relative inline-block">
-                                            <img id="preview-image" src="{{ $profesional->foto ? asset($profesional->foto) : '' }}" 
-                                                 alt="Foto del profesional" 
-                                                 class="mx-auto h-40 object-cover rounded-md shadow-sm">
-                                            <button type="button" id="remove-image" 
-                                                    class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 transform translate-x-1/2 -translate-y-1/2 hover:bg-red-600 transition">
-                                                <i class="ri-close-line text-xs"></i>
-                                            </button>
-                                        </div>
-                                        <p id="file-name" class="mt-2 text-sm text-gray-600 truncate max-w-xs">
-                                            {{ $profesional->foto ? basename($profesional->foto) : '' }}
-                                        </p>
+                    @if ($errors->any())
+                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                            <strong>¡Ups! Algo salió mal.</strong>
+                            <ul class="mt-2 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <!-- Foto del Profesional -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Foto del Profesional</label>
+                        <div class="mt-1">
+                            <!-- Contenedor dinámico que muestra la imagen actual o el área de carga -->
+                            <div id="image-upload-container" class="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                                <!-- Imagen actual o vista previa -->
+                                <div id="image-preview" class="{{ $profesional->foto ? '' : 'hidden' }}">
+                                    <div class="relative inline-block">
+                                        <img id="preview-image"
+                                             src="{{ $profesional->foto ? asset('storage/' . $profesional->foto) : '' }}"
+                                             alt="Foto del profesional"
+                                             class="mx-auto h-40 object-cover rounded-md shadow-sm">
+                                        <button type="button" id="remove-image"
+                                                class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 transform translate-x-1/2 -translate-y-1/2 hover:bg-red-600 transition">
+                                            <i class="ri-close-line text-xs"></i>
+                                        </button>
                                     </div>
-                                    
-                                    <!-- Área de carga (solo visible si no hay imagen) -->
-                                    <div id="upload-area" class="{{ $profesional->foto ? 'hidden' : '' }}">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <div class="flex justify-center text-sm text-gray-600">
-                                            <label for="foto" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
-                                                <span>Sube una imagen</span>
-                                                <input id="foto" name="foto" type="file" class="sr-only" accept="image/*">
-                                            </label>
-                                            <p class="pl-1">o arrastra y suelta</p>
-                                        </div>
-                                        <p class="text-xs text-gray-500">PNG, JPG, GIF hasta 2MB</p>
+                                    <p id="file-name" class="mt-2 text-sm text-gray-600 truncate max-w-xs">
+                                        {{ $profesional->foto ? basename($profesional->foto) : '' }}
+                                    </p>
+                                </div>
+                    
+                                <!-- Área de carga (solo visible si no hay imagen) -->
+                                <div id="upload-area" class="{{ $profesional->foto ? 'hidden' : '' }}">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="flex justify-center text-sm text-gray-600">
+                                        <label for="foto" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
+                                            <span>Sube una imagen</span>
+                                            <input id="foto" name="foto" type="file" class="sr-only" accept="image/*">
+                                        </label>
+                                        <p class="pl-1">o arrastra y suelta</p>
                                     </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF hasta 2MB</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     <!-- Sección de Información Personal -->
                     <div class="space-y-4">
@@ -69,7 +82,11 @@
                             <!-- Primer Nombre -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Primer Nombre</label>
-                                <input type="text" name="primer_nombre" value="{{ old('primer_nombre', $profesional->primer_nombre) }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                <input type="text" name="primer_nombre" value="{{ old('primer_nombre', $profesional->primer_nombre) }}"
+                                    class="mt-1 block w-full border @error('primer_nombre') border-red-500 @else border-gray-300 @enderror rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                @error('primer_nombre')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Segundo Nombre -->
@@ -171,44 +188,40 @@
                             <!-- Facebook -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Facebook</label>
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-                                        https://
-                                    </span>
-                                    <input type="text" name="facebook" value="{{ old('facebook', str_replace('https://', '', $profesional->facebook)) }}" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="facebook.com/usuario">
+                                <div class="mt-1">
+                                    <input type="text" name="facebook" value="{{ old('facebook', $profesional->facebook) }}"
+                                        class="w-full rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="https://facebook.com/usuario">
                                 </div>
                             </div>
 
                             <!-- Twitter -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Twitter</label>
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-                                        https://
-                                    </span>
-                                    <input type="text" name="twitter" value="{{ old('twitter', str_replace('https://', '', $profesional->twitter)) }}" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="twitter.com/usuario">
+                                <div class="mt-1">
+                                    <input type="text" name="twitter" value="{{ old('twitter', $profesional->twitter) }}"
+                                        class="w-full rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="https://twitter.com/usuario">
                                 </div>
-                            </div>
+                             </div>
 
                             <!-- Instagram -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-                                        https://
-                                    </span>
-                                    <input type="text" name="instagram" value="{{ old('instagram', str_replace('https://', '', $profesional->instagram)) }}" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="instagram.com/usuario">
+                                <div class="mt-1">
+                                    <input type="text" name="instagram" value="{{ old('instagram', $profesional->instagram) }}"
+                                        class="w-full rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="https://instagram.com/usuario">
                                 </div>
                             </div>
 
                             <!-- LinkedIn -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
-                                <div class="mt-1 flex rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-                                        https://
-                                    </span>
-                                    <input type="text" name="linkedin" value="{{ old('linkedin', str_replace('https://', '', $profesional->linkedin)) }}" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="linkedin.com/in/usuario">
+            <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+                                <div class="mt-1">
+                                    <input type="text" name="linkedin" value="{{ old('linkedin', $profesional->linkedin) }}"
+                                        class="w-full rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="https://linkedin.com/in/usuario">
                                 </div>
                             </div>
                         </div>

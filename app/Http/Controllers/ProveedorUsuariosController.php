@@ -52,6 +52,9 @@ class ProveedorUsuariosController extends Controller
         'file_credential2' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
     ]);
 
+    // Comprobar si es el primer usuario
+    $isFirstUser = ProveedorUsuario::count() == 0;
+
     // Guardar el usuario
     $proveedorUsuario = ProveedorUsuario::create([
         'name' => $request->name,
@@ -72,6 +75,7 @@ class ProveedorUsuariosController extends Controller
         'street' => $request->street,
         'street_number' => $request->street_number,
         'postal_code' => $request->postal_code,
+        'perfil' => $isFirstUser ? 'Principal' : 'Secundario', // Asignar "Principal" al primer usuario
     ]);
 
     // Manejo de archivos

@@ -14,7 +14,7 @@ class ProfesionalController extends Controller
     public function index()
     {
         $profesionales = Profesional::all();
-        return view('professional.index', compact('profesionales'));
+        return view('Professional.index', compact('profesionales'));
     }
 
     /**
@@ -22,7 +22,7 @@ class ProfesionalController extends Controller
      */
     public function create()
     {
-        return view('professional.create');
+        return view('Professional.create');
     }
 
     /**
@@ -93,7 +93,7 @@ class ProfesionalController extends Controller
     public function show(string $id)
     {
         $profesional = Profesional::findOrFail($id);
-        return view('professional.show', compact('profesional'));
+        return view('Professional.show', compact('profesional'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProfesionalController extends Controller
     public function edit($id)
     {
         $profesional = Profesional::findOrFail($id);
-        return view('professional.edit', compact('profesional'));
+        return view('Professional.edit', compact('profesional'));
     }
 
     /**

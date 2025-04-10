@@ -8,7 +8,7 @@
     <div class="flex items-center mb-3 sm:mb-0">
         <i class="ri-service-line text-2xl text-blue-600 mr-3"></i>
         <h2 class="text-2xl font-bold text-gray-800">
-            Agregar Servicio
+            Agregar Producto
         </h2>
     </div>
     <!-- Botón Rellenar automáticamente (Demo) alineado a la derecha -->

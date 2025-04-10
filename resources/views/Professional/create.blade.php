@@ -199,7 +199,7 @@ function autofillForm() {
     console.log("Función autofillForm ejecutada");
 
     // Datos aleatorios
-    const names = ['Carlos', 'Ana', 'Luis', 'Patricia', 'Jorge', 'María', 'Fernando', 'Lucía'];
+    const names = ['Carlos', 'Ana', 'Luis', 'Patricia', 'Jorge', 'Maria', 'Fernando', 'Lucia'];
     const lastnames = ['Martinez', 'Garcia', 'Rodriguez', 'Hernandez', 'Lopez', 'Perez', 'Gomez', 'Diaz'];
     const professions = ['Médico', 'Ingeniero', 'Abogado', 'Psicólogo', 'Arquitecto', 'Profesor'];
     const specialties = {

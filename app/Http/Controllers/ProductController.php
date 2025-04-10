@@ -11,12 +11,12 @@ class ProductController extends Controller
     {
         // Usando paginación para mejorar la carga de productos
         $productos = Producto::paginate(10); // 10 productos por página
-        return view('productos.index', compact('productos'));
+        return view('Productos.index', compact('productos'));
     }
 
     public function create()
     {
-        return view('productos.create'); // Vista para crear el producto
+        return view('Productos.create'); // Vista para crear el producto
     }
 
     public function store(Request $request)
@@ -56,14 +56,14 @@ class ProductController extends Controller
         public function show($id)
         {
             $producto = Producto::findOrFail($id);
-            return view('productos.show', compact('producto'));
+            return view('Productos.show', compact('producto'));
         }
     
         // Editar un producto
         public function edit($id)
         {
             $producto = Producto::findOrFail($id);
-            return view('productos.edit', compact('producto'));
+            return view('Productos.edit', compact('producto'));
         }
     
         // Actualizar un producto

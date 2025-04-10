@@ -105,10 +105,9 @@ Route::prefix('empresa-prueba')->group(function () {
     Route::delete('/solicitudes/{id}', [EmpresaPruebaController::class, 'eliminar'])->name('empresa_prueba.solicitudes.eliminar');
 });
 
-
+///RUTAS PARA PROVEEDORES///
 Route::prefix('proveedor')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('proveedor.dashboard');
-    //Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedor.proveedores');
 
     Route::resource('proveedores', ProveedorController::class)->names([
         'index' => 'proveedores.proveedores',
@@ -120,13 +119,13 @@ Route::prefix('proveedor')->group(function () {
         'destroy' => 'proveedores.destroy',
     ]);
 
-    // Ruta para Solicitudes
+    // Ruta para solicitudes
     Route::get('/solicitudes', [ProveedorSolicitudController::class, 'index'])->name('proveedor.solicitudes');
     Route::get('/solicitudes/crear', [ProveedorSolicitudController::class, 'create'])->name('proveedor.solicitudes.crear');
     Route::post('/solicitudes', [ProveedorSolicitudController::class, 'store'])->name('proveedor.solicitudes.store');
     Route::get('/solicitudes/{id}', [ProveedorSolicitudController::class, 'show'])->name('proveedor.solicitudes.ver');
 
-    // Productos
+    // Rutas para productos
     Route::get('/productos', [ProductController::class, 'index'])->name('productos.index');
     Route::get('/productos/create', [ProductController::class, 'create'])->name('productos.create');
     Route::post('/productos', [ProductController::class, 'store'])->name('productos.store');
@@ -135,6 +134,7 @@ Route::prefix('proveedor')->group(function () {
     Route::put('/productos/{id}', [ProductController::class, 'update'])->name('productos.update');
     Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos.destroy');
 
+    // Rutas para servicios
     Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');
     Route::get('/servicios/create', [ServicioController::class, 'create'])->name('servicios.create');
     Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
@@ -142,9 +142,8 @@ Route::prefix('proveedor')->group(function () {
     Route::get('/servicios/{id}/edit', [ServicioController::class, 'edit'])->name('servicios.edit');
     Route::put('/servicios/{id}', [ServicioController::class, 'update'])->name('servicios.update');
     Route::delete('/servicios/{id}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
-    Route::delete('/servicios/{id}/foto', [ServicioController::class, 'eliminarFoto'])->name('servicios.eliminarFoto');
 
-
+    // Rutas para profesionales
     Route::get('/profesionales', [ProfesionalController::class, 'index'])->name('profesionales.index');
     Route::get('/profesionales/create', [ProfesionalController::class, 'create'])->name('profesionales.create');
     Route::post('/profesionales', [ProfesionalController::class, 'store'])->name('profesionales.store');
@@ -162,7 +161,7 @@ Route::prefix('proveedor')->group(function () {
     Route::put('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'update'])->name('proveedor.usuarios.update');
     Route::delete('/usuarios/{usuario}', [ProveedorUsuariosController::class, 'destroy'])->name('proveedor.usuarios.destroy');
 
-    // Ruta para subcuentas php artisan make:controller ProveedorSolicitudController --resource
+    // Ruta para subcuentas 
     Route::get('/subcuentas-proveedor', [ProveedorSubcuentaController::class, 'index'])->name('proveedor.subcuentas');
 });
 

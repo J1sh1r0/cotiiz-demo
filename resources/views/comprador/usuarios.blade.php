@@ -40,71 +40,71 @@
         </div>
 
         <!-- Tabla de usuarios -->
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Usuario</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Correo Electrónico</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Teléfono</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Tipo de Usuario</th>
-                        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Permisos</th>
-                        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                    @if (isset($usuarios) && count($usuarios) > 0)
-                        @foreach ($usuarios as $usuario)
-                        <tr class="hover:bg-gray-100 transition-colors duration-150">
-                            <!-- Usuario -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $usuario->firstname }} {{ $usuario->lastname }}</div>
-                            </td>
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Usuario</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Correo Electrónico</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Teléfono</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Tipo de Usuario</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Permisos</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+            @if (isset($usuarios) && count($usuarios) > 0)
+                @foreach ($usuarios as $index => $usuario)
+                <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-colors duration-150">
+                    <!-- Usuario -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ $usuario->firstname }} {{ $usuario->lastname }}</div>
+                    </td>
 
-                            <!-- Correo -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">{{ $usuario->email }}</div>
-                            </td>
+                    <!-- Correo -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">{{ $usuario->email }}</div>
+                    </td>
 
-                            <!-- Teléfono -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">{{ $usuario->phone }}</div>
-                            </td>
+                    <!-- Teléfono -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">{{ $usuario->phone }}</div>
+                    </td>
 
-                            <!-- Tipo de Usuario -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $usuario->user_type == 'Principal' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
-                                    {{ $usuario->user_type }}
-                                </span>
-                            </td>
+                    <!-- Tipo de Usuario -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            {{ $usuario->user_type == 'Principal' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' }}">
+                            {{ $usuario->user_type }}
+                        </span>
+                    </td>
 
-                            <!-- Permisos -->
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    {{ $usuario->permisos ?? 'Todos' }}
-                                </span>
-                            </td>
+                    <!-- Permisos -->
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                            {{ $usuario->permisos ?? 'Todos' }}
+                        </span>
+                    </td>
 
-                            <!-- Acciones -->
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button onclick="openUserModal({{ $usuario->id }})" 
-                                    class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
-                                    <i class="ri-eye-line text-lg"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                No hay usuarios registrados.
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-        </div>
+                    <!-- Acciones -->
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onclick="openUserModal({{ $usuario->id }})" 
+                            class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Ver detalles">
+                            <i class="ri-eye-line text-lg"></i>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                        No hay usuarios registrados.
+                    </td>
+                </tr>
+            @endif
+        </tbody>
+    </table>
+</div>
 
         <!-- Paginación -->
         <div class="px-6 py-4 border-t border-gray-200">

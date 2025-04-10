@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolicitudEmpresaprueba;
+use App\Models\SolicitudEmpresaPrueba;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +16,7 @@ class EmpresaPruebaController extends Controller
             ? auth()->user()->empresa_id
             : 1;
 
-        $solicitudes = SolicitudEmpresaprueba::where('empresa_id', $empresaId)
+        $solicitudes = SolicitudEmpresaPrueba::where('empresa_id', $empresaId)
             ->latest()
             ->get();
 
@@ -25,19 +25,19 @@ class EmpresaPruebaController extends Controller
 
     public function ver($id)
     {
-        $solicitud = SolicitudEmpresaprueba::findOrFail($id);
+        $solicitud = SolicitudEmpresaPrueba::findOrFail($id);
         return view('empresaprueba.solicitudes.ver', compact('solicitud'));
     }
 
     public function editar($id)
     {
-        $solicitud = SolicitudEmpresaprueba::findOrFail($id);
+        $solicitud = SolicitudEmpresaPrueba::findOrFail($id);
         return view('empresaprueba.solicitudes.editar', compact('solicitud'));
     }
 
     public function actualizar(Request $request, $id)
     {
-        $solicitud = SolicitudEmpresaprueba::findOrFail($id);
+        $solicitud = SolicitudEmpresaPrueba::findOrFail($id);
 
         $request->validate($this->getValidationRules($solicitud->tipo));
 
@@ -49,7 +49,7 @@ class EmpresaPruebaController extends Controller
 
     public function eliminar($id)
     {
-        $solicitud = SolicitudEmpresaprueba::findOrFail($id);
+        $solicitud = SolicitudEmpresaPrueba::findOrFail($id);
         $solicitud->delete();
 
         return redirect()->route('empresa_prueba.solicitudes')
@@ -62,7 +62,7 @@ class EmpresaPruebaController extends Controller
             ? auth()->user()->empresa_id
             : 1;
 
-        $solicitudes = SolicitudEmpresaprueba::where('empresa_id', $empresaId)
+        $solicitudes = SolicitudEmpresaPrueba::where('empresa_id', $empresaId)
             ->latest()
             ->paginate(10);
 
@@ -120,7 +120,7 @@ class EmpresaPruebaController extends Controller
         $data['tipo'] = $tipo;
         $data['estado'] = 'pendiente';
 
-        SolicitudEmpresaprueba::create($data);
+        SolicitudEmpresaPrueba::create($data);
 
         return redirect()->route('empresa_prueba.solicitudes')
             ->with('success', 'Solicitud creada correctamente');

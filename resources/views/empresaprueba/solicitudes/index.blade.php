@@ -89,81 +89,81 @@
             </div>
 
             <!-- Tabla de solicitudes -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                        @forelse($solicitudes as $solicitud)
-                            <tr class="solicitud-row hover:bg-gray-50 transition-colors duration-150">
-                                <td class="px-6 py-4">
-                                    <div class="font-medium text-gray-900">{{ $solicitud->titulo }}</div>
-                                    @if ($solicitud->descripcion)
-                                        <div class="text-sm text-gray-500 mt-1">
-                                            {{ Str::limit($solicitud->descripcion, 50) }}
-                                        </div>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                        {{ ucfirst($solicitud->tipo) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs rounded-full 
-                                        {{ $solicitud->estado == 'pendiente'
-                                            ? 'bg-yellow-100 text-yellow-800'
-                                            : ($solicitud->estado == 'aprobado'
-                                                ? 'bg-green-100 text-green-800'
-                                                : ($solicitud->estado == 'completado'
-                                                    ? 'bg-blue-100 text-blue-800'
-                                                    : 'bg-red-100 text-red-800')) }}">
-                                        {{ ucfirst($solicitud->estado) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $solicitud->created_at->format('d/m/Y H:i') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex space-x-3">
-                                        <a href="{{ route('empresa_prueba.solicitudes.ver', $solicitud->id) }}"
-                                            class="text-blue-500 hover:text-blue-700 transition-colors duration-200"
-                                            title="Ver detalles">
-                                            <i class="ri-eye-line text-lg"></i>
-                                        </a>
-                                        <a href="{{ route('empresa_prueba.solicitudes.editar', $solicitud->id) }}"
-                                            class="text-yellow-500 hover:text-yellow-700 transition-colors duration-200"
-                                            title="Editar">
-                                            <i class="ri-edit-line text-lg"></i>
-                                        </a>
-                                        <button type="button" onclick="openModal('{{ route('empresa_prueba.solicitudes.eliminar', $solicitud->id) }}')" 
-                                            class="text-red-500 hover:text-red-700 transition-colors duration-200" 
-                                            title="Eliminar">
-                                            <i class="ri-delete-bin-line text-lg"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500">
-                                    <div class="flex flex-col items-center justify-center py-8">
-                                        <i class="ri-file-search-line text-4xl text-gray-300 mb-2"></i>
-                                        <p>No hay solicitudes registradas</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody" class="divide-y divide-gray-200">
+            @forelse($solicitudes as $index => $solicitud)
+                <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-50 transition-colors duration-150">
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-gray-900">{{ $solicitud->titulo }}</div>
+                        @if ($solicitud->descripcion)
+                            <div class="text-sm text-gray-500 mt-1">
+                                {{ Str::limit($solicitud->descripcion, 50) }}
+                            </div>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                            {{ ucfirst($solicitud->tipo) }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {{ $solicitud->estado == 'pendiente'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : ($solicitud->estado == 'aprobado'
+                                    ? 'bg-green-100 text-green-800'
+                                    : ($solicitud->estado == 'completado'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-red-100 text-red-800')) }}">
+                            {{ ucfirst($solicitud->estado) }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $solicitud->created_at->format('d/m/Y H:i') }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-3">
+                            <a href="{{ route('empresa_prueba.solicitudes.ver', $solicitud->id) }}"
+                                class="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                                title="Ver detalles">
+                                <i class="ri-eye-line text-lg"></i>
+                            </a>
+                            <a href="{{ route('empresa_prueba.solicitudes.editar', $solicitud->id) }}"
+                                class="text-yellow-500 hover:text-yellow-700 transition-colors duration-200"
+                                title="Editar">
+                                <i class="ri-edit-line text-lg"></i>
+                            </a>
+                            <button type="button" onclick="openModal('{{ route('empresa_prueba.solicitudes.eliminar', $solicitud->id) }}')" 
+                                class="text-red-500 hover:text-red-700 transition-colors duration-200" 
+                                title="Eliminar">
+                                <i class="ri-delete-bin-line text-lg"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                        <div class="flex flex-col items-center justify-center py-8">
+                            <i class="ri-file-search-line text-4xl text-gray-300 mb-2"></i>
+                            <p>No hay solicitudes registradas</p>
+                        </div>
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
             <!-- Paginación -->
             <div class="px-6 py-4 border-t border-gray-200">
@@ -300,6 +300,11 @@
             });
         });
     </script>
+<style>
+    #deleteModal {
+    z-index: 9999; /* Esto asegura que el modal está por encima de los otros elementos */
+}
+</style>
 @endsection
 
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
