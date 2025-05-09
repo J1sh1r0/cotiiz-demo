@@ -5,23 +5,27 @@
 @section('content')
 <div class="container mx-auto p-6">
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <!-- Encabezado con gradiente -->
-        <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-lg bg-blue-100 text-blue-600 mr-4">
-                        <i class="fas fa-file-alt text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold">Nueva Solicitud: {{ ucfirst($tipo) }}</h1>
-                    </div>
-                </div>
-                <button onclick="history.back()" 
-                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
-                    <i class="ri-arrow-left-line mr-2"></i> Regresar
-                </button>
+<!-- Encabezado con gradiente -->
+<div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Título e ícono -->
+        <div class="flex items-center flex-1 min-w-0">
+            <div class="p-3 rounded-lg bg-blue-100 text-blue-600 mr-4">
+                <i class="fas fa-file-alt text-xl"></i>
             </div>
+            <h1 class="text-2xl font-bold whitespace-normal break-words">Nueva Solicitud: {{ ucfirst($tipo) }}</h1>
         </div>
+
+        <!-- Botón regresar -->
+        <div class="flex-shrink-0">
+            <button onclick="history.back()" 
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                <i class="ri-arrow-left-line"></i>
+                <span class="hidden sm:inline ml-2">Regresar</span>
+            </button>
+        </div>
+    </div>
+</div>
 
         <!-- Formulario principal -->
         <form id="formSolicitud" action="{{ route('empresa_prueba.solicitudes.guardar', $tipo) }}" method="POST" class="p-6">

@@ -4,45 +4,47 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Encabezado -->
 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-    <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-8 py-6 border-b border-gray-200 flex justify-between items-center">
-        <div class="flex items-center">
-            <i class="ri-user-add-line text-2xl text-blue-600 mr-3"></i>
-            <h1 class="text-2xl font-bold text-gray-800">Agregar Profesional</h1>
-        </div>
+    <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-4 border-b border-gray-200 flex flex-wrap justify-between items-center gap-3">
+    <!-- Título e ícono -->
+    <div class="flex items-center">
+        <i class="ri-user-add-line text-2xl text-blue-600 mr-3"></i>
+        <h1 class="text-2xl font-bold text-gray-800">Agregar Profesional</h1>
+    </div>
+
+    <!-- Contenedor de botones y mensajes -->
+    <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-end">
         <!-- Botón Rellenar automáticamente (Demo) -->
-        <button type="button" onclick="autofillForm()" 
-            class="ml-auto bg-purple-100 text-purple-800 px-4 py-2 rounded-lg border border-purple-300 
-            hover:bg-purple-200 transition-colors flex items-center">
+        <button type="button" onclick="autofillForm()"
+            class="bg-purple-100 text-purple-800 px-4 py-2 rounded-lg border border-purple-300 hover:bg-purple-200 transition-colors flex items-center text-sm whitespace-nowrap">
             <i class="ri-magic-line mr-2"></i> Rellenar automáticamente (Demo)
         </button>
 
-        <!-- Espacio entre los botones -->
-        <div class="my-4"></div>
-
-        <!-- Mensajes de éxito o error -->
-        <div class="w-full sm:w-auto mt-3 sm:mt-0">
-            @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-        </div>
-
         <!-- Botón Regresar -->
-        <button onclick="history.back()" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition ml-4">
+        <button onclick="history.back()" 
+            class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition flex items-center text-sm whitespace-nowrap">
             <i class="ri-arrow-left-line mr-2"></i> Regresar
         </button>
     </div>
+
+    <!-- Mensajes de éxito o error (ocupan 100%) -->
+    <div class="w-full mt-3">
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+</div>
 
             <!-- Formulario -->
             <div class="p-8">

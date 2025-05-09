@@ -151,32 +151,32 @@
             <!-- La información del usuario aparecerá aquí -->
         </div>
 
-        <!-- Pie del modal con botones compactos en una línea -->
-        <div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
-            <div class="flex flex-nowrap justify-end gap-1.5 overflow-x-auto">
-                <button id="btnVerInfo" onclick="loadUserInfo()"
-                    class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-eye-line mr-1 text-sm"></i> Ver Información
-                </button>
-                <a id="editUserBtn" href="#" 
-                    class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-edit-line mr-1 text-sm"></i> Editar
-                </a>
-                <form id="deleteUserForm" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" 
-                        class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap"
-                        onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
-                        <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
-                    </button>
-                </form>
-                <button onclick="closeUserModal()" 
-                    class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-close-line mr-1 text-sm"></i> Cerrar
-                </button>
-            </div>
-        </div>
+        <!-- Pie del modal con botones responsivos en stack en móviles -->
+<div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
+    <div class="flex flex-col md:flex-row md:justify-end md:items-center gap-2 text-center">
+        <button id="btnVerInfo" onclick="loadUserInfo()"
+            class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded flex justify-center items-center transition-colors duration-200 text-sm">
+            <i class="ri-eye-line mr-1 text-sm"></i> Ver Información
+        </button>
+        <a id="editUserBtn" href="#"
+            class="bg-amber-400 hover:bg-amber-500 text-white px-4 py-2 rounded flex justify-center items-center transition-colors duration-200 text-sm">
+            <i class="ri-edit-line mr-1 text-sm"></i> Editar
+        </a>
+        <form id="deleteUserForm" method="POST" class="w-full md:w-auto">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                class="bg-rose-400 hover:bg-rose-500 text-white px-4 py-2 rounded flex justify-center items-center transition-colors duration-200 text-sm w-full md:w-auto"
+                onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
+            </button>
+        </form>
+        <button onclick="closeUserModal()"
+            class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded flex justify-center items-center transition-colors duration-200 text-sm">
+            <i class="ri-close-line mr-1 text-sm"></i> Cerrar
+        </button>
+    </div>
+</div>
     </div>
 </div>
 

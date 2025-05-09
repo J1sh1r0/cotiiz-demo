@@ -147,36 +147,36 @@
             </div>
         </div>
 
-        <!-- Pie del modal con botones compactos en una línea -->
-        <div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
-            <div class="flex flex-nowrap justify-end gap-1.5 overflow-x-auto">
-                <a id="verSolicitudBtn" href="#"
-                    class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-eye-line mr-1 text-sm"></i> Ver Detalles
-                </a>
-                <a id="chatSolicitudBtn" href="#"
-                    class="bg-teal-400 hover:bg-teal-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-chat-3-line mr-1 text-sm"></i> Chat
-                </a>
-                <a id="editarSolicitudBtn" href="#"
-                    class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-edit-line mr-1 text-sm"></i> Editar
-                </a>
-                <form id="eliminarSolicitudForm" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                        class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap"
-                        onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')">
-                        <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
-                    </button>
-                </form>
-                <button onclick="closeSolicitudModal()"
-                    class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm whitespace-nowrap">
-                    <i class="ri-close-line mr-1 text-sm"></i> Cerrar
-                </button>
-            </div>
-        </div>
+        <!-- Pie del modal con botones centrados -->
+<div class="bg-gray-50 px-5 py-3 border-t border-gray-200">
+    <div class="flex flex-wrap justify-center gap-2">
+        <a id="verSolicitudBtn" href="#"
+            class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm">
+            <i class="ri-eye-line mr-1 text-sm"></i> Ver Detalles
+        </a>
+        <a id="chatSolicitudBtn" href="#"
+            class="bg-teal-400 hover:bg-teal-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm">
+            <i class="ri-chat-3-line mr-1 text-sm"></i> Chat
+        </a>
+        <a id="editarSolicitudBtn" href="#"
+            class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm">
+            <i class="ri-edit-line mr-1 text-sm"></i> Editar
+        </a>
+        <form id="eliminarSolicitudForm" method="POST" class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm"
+                onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')">
+                <i class="ri-delete-bin-line mr-1 text-sm"></i> Eliminar
+            </button>
+        </form>
+        <button onclick="closeSolicitudModal()"
+            class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded flex items-center transition-colors duration-200 text-sm">
+            <i class="ri-close-line mr-1 text-sm"></i> Cerrar
+        </button>
+    </div>
+</div>
     </div>
 </div>
 
